@@ -23,6 +23,26 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;700&display=swap"
         rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
+    <style>
+        .ms {
+            font-family: 'Material Symbols Rounded';
+            font-weight: normal;
+            font-style: normal;
+            font-size: inherit;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -60,8 +80,6 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/framer-motion@11.11.11/dist/framer-motion.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <script>
         const { useState, useEffect, createElement: h } = React;
 
@@ -77,31 +95,21 @@
 
             function App() {
                 const [showSplash, setShowSplash] = useState(true);
-                const [hasReadToBottom, setHasReadToBottom] = useState(false);
+                const [showDocs, setShowDocs] = useState(false);
 
                 useEffect(() => {
                     const timer = setTimeout(() => setShowSplash(false), 2500);
                     return () => clearTimeout(timer);
                 }, []);
 
-                useEffect(() => {
-                    if (!showSplash && window.lucide) {
-                        try { window.lucide.createIcons(); } catch (e) { }
-                    }
-                }, [showSplash]);
-
-                const handleScroll = (e) => {
-                    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-                    // 當滾動超過 90% 時即視為已閱讀
-                    if (scrollTop + clientHeight >= scrollHeight - 30) {
-                        setHasReadToBottom(true);
-                    }
-                };
-
                 return h(AnimatePresence, { mode: 'wait' },
                     showSplash
                         ? h(motion.div, { key: "splash", exit: { opacity: 0, scale: 1.1 }, transition: { duration: 0.5 } },
                             h(SplashScreen)
+                        )
+                        : showDocs
+                        ? h(motion.div, { key: "docs", initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: 40 }, transition: { duration: 0.3 } },
+                            h(DocsPage, { onBack: () => setShowDocs(false), liffUrl: LIFF_URL })
                         )
                         : h(motion.main, {
                             key: "landing",
@@ -137,8 +145,7 @@
                                     className: "h-full bg-white/60 backdrop-blur-xl rounded-[32px] border border-white shadow-xl flex flex-col overflow-hidden md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto"
                                 },
                                     h('div', {
-                                        className: "flex-1 overflow-y-auto p-6 space-y-8 scroll-smooth webkit-overflow-scrolling no-scrollbar",
-                                        onScroll: handleScroll
+                                        className: "flex-1 overflow-y-auto p-6 space-y-8 scroll-smooth webkit-overflow-scrolling no-scrollbar"
                                     },
                                         h(MainContent)
                                     )
@@ -149,24 +156,24 @@
                                 h('div', { className: "md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto" },
                                     h(motion.button, {
                                         whileTap: { scale: 0.96 },
-                                        onClick: () => { window.location.href = LIFF_URL; },
+                                        onClick: () => setShowDocs(true),
                                         className: "w-full py-5 rounded-[24px] font-bold text-lg shadow-xl transition-all duration-300 flex items-center justify-center gap-3 bg-[#FFCE00] text-[#735C00] shadow-[#FFCE00]/20 font-black"
                                     },
-                                        h('span', null, "開始使用"),
+                                        h('span', null, "使用說明"),
                                         h(motion.div, {
                                             animate: { x: [0, 5, 0] },
                                             transition: { repeat: Infinity, duration: 1 }
-                                        }, "→")
+                                        }, h('span', { className: "ms text-[20px]" }, "arrow_forward"))
                                     )
                                 ),
                                 h('div', { className: "flex flex-col items-center gap-2 mt-4" },
-                                    h('a', { 
-                                        href: "privacy.html", 
-                                        onClick: (e) => { 
-                                            e.preventDefault(); 
-                                            window.location.href = "privacy.html"; 
+                                    h('a', {
+                                        href: "privacy.html",
+                                        onClick: (e) => {
+                                            e.preventDefault();
+                                            window.location.href = "privacy.html";
                                         },
-                                        className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4" 
+                                        className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
                                     }, "隱私權政策 Privacy Policy"),
                                     h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.1 • © 2026 HOBAN CORP")
                                 )
@@ -242,56 +249,25 @@
             function FeatureShowcase() {
                 return h('div', { className: "space-y-4 pb-32" },
                     h(FeatureItem, {
-                        icon: h('svg', { width: "28", height: "28", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-                            h('path', { d: "m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L14.36 6.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0l4.28-4.28a1.2 1.2 0 0 0 0-1.72Z" }),
-                            h('path', { d: "m7 18 4.3 4.3c.47.47 1.24.47 1.71 0L22.1 13.2c.47-.46.47-1.23 0-1.7L17.8 7.2" }),
-                            h('path', { d: "m5.11 11.45-3.84 3.84a1.208 1.208 0 0 0 0 1.7l1.28 1.28a1.208 1.208 0 0 0 1.7 0l3.84-3.84" }),
-                            h('path', { d: "M11 5h.01" }),
-                            h('path', { d: "M15.3 10.3h.01" }),
-                            h('path', { d: "M10.3 15.3h.01" }),
-                            h('path', { d: "M5 11h.01" }),
-                            h('path', { d: "M11 19h.01" })
-                        ),
+                        icon: "auto_awesome",
                         color: "bg-blue-50 text-blue-600",
                         title: "AI 智慧排班精靈",
                         desc: "自動分析成員位置與班表空檔，為每一場服務推薦最合適的執行人選，大幅節省行政溝通時間。"
                     }),
                     h(FeatureItem, {
-                        icon: h('svg', { width: "28", height: "28", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-                            h('path', { d: "M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.02-.26 3.02" }),
-                            h('path', { d: "M2 12a10 10 0 0 1 18-6" }),
-                            h('path', { d: "M2 12a10 10 0 0 0 18 6" }),
-                            h('path', { d: "M5 8a7 7 0 0 1 12-3" }),
-                            h('path', { d: "M5 8a7 7 0 0 0 12 3" }),
-                            h('path', { d: "M8 5a4 4 0 0 1 7.46 1" }),
-                            h('path', { d: "M8 5a4 4 0 0 0 7.46 1" }),
-                            h('path', { d: "M12 10a2 2 0 0 1 2 2" }),
-                            h('path', { d: "M18 12c0 3.31-2.69 6-6 6" }),
-                            h('path', { d: "M12 18s2.5 0 2.5 3" })
-                        ),
+                        icon: "sensors",
                         color: "bg-emerald-50 text-emerald-600",
                         title: "即時出勤看板",
                         desc: "支援實時簽到退紀錄，精準掌握服務地點與時間戳記，讓團隊的出勤狀況透明可見。"
                     }),
                     h(FeatureItem, {
-                        icon: h('svg', { width: "28", height: "28", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-                            h('rect', { width: "18", height: "18", x: "3", y: "4", rx: "2", ry: "2" }),
-                            h('line', { x1: "16", x2: "16", y1: "2", y2: "6" }),
-                            h('line', { x1: "8", x2: "8", y1: "2", y2: "6" }),
-                            h('line', { x1: "3", x2: "21", y1: "10", y2: "10" }),
-                            h('path', { d: "m9 16 2 2 4-4" })
-                        ),
+                        icon: "sync_alt",
                         color: "bg-violet-50 text-violet-600",
                         title: "日曆雙向同步",
                         desc: "無縫同步個人班表至 Google 行事曆，雙向串接讓行程安排不衝突，隨時隨地查看最新動態。"
                     }),
                     h(FeatureItem, {
-                        icon: h('svg', { width: "28", height: "28", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
-                            h('path', { d: "M3 3v18h18" }),
-                            h('path', { d: "M18 17V9" }),
-                            h('path', { d: "M13 17V5" }),
-                            h('path', { d: "M8 17v-3" })
-                        ),
+                        icon: "bar_chart",
                         color: "bg-orange-50 text-orange-600",
                         title: "自動化薪資統計",
                         desc: "結合出勤工時自動計算基礎薪資，簡化繁瑣的核帳流程，讓每月的報表輸出更為精準快速。"
@@ -302,7 +278,7 @@
             function FeatureItem({ icon, title, desc, color }) {
                 return h('div', { className: "flex gap-5 p-6 bg-white/60 rounded-[32px] border border-white shadow-sm transition-all hover:shadow-md" },
                     h('div', { className: `w-14 h-14 shrink-0 rounded-2xl ${color} flex items-center justify-center shadow-sm` },
-                        icon
+                        h('span', { className: "ms text-[28px]" }, icon)
                     ),
                     h('div', { className: "space-y-1" },
                         h('h4', { className: "font-black text-slate-900 text-[15px]" }, title),
@@ -310,6 +286,257 @@
                     )
                 );
             }
+
+            // ─── Docs Page ────────────────────────────────────────────────
+
+            const D = 'images/docs/'; // image base path
+            const DOC_SECTIONS = [
+                {
+                    id: 'getstarted',
+                    label: 'A',
+                    title: '入門指引',
+                    subtitle: 'Get Started',
+                    color: 'bg-blue-50 text-blue-600',
+                    accent: '#3B82F6',
+                    items: [
+                        {
+                            title: '帳號註冊',
+                            icon: 'person',
+                            steps: [
+                                { heading: '填寫基本資料', body: '完成服務訂閱後，您會收到專屬的註冊連結。請公司主要管理者先行完成註冊（設定顯示名稱與手機號碼），再複製邀請連結邀請其他成員加入。', image: D+'A_帳號註冊_2.png' },
+                                { heading: 'LINE 帳號認證', body: '首次使用時，系統會請您授權 LINE 帳號。請保留「主個人檔案資訊」、「傳送訊息至聊天室」、「內部識別碼」三項預設開啟，避免造成服務異常。', image: D+'A_帳號註冊_1.png' },
+                            ]
+                        },
+                        {
+                            title: '加入群組',
+                            icon: 'group_add',
+                            steps: [
+                                { heading: '取得群組代碼', body: '向公司管理員索取群組代碼（例如：BE154T）。', image: D+'A_加入群組_1.png' },
+                                { heading: '輸入代碼加入', body: '進入底部導航「設定」→「群組設定」→ 點選「加入」，貼上群組代碼後點擊「加入群組」即可完成。加入後才能接受工作指派。', image: D+'A_加入群組_2.png' },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    id: 'admin',
+                    label: 'B',
+                    title: '管理員專區',
+                    subtitle: 'Admin Console',
+                    color: 'bg-amber-50 text-amber-600',
+                    accent: '#F59E0B',
+                    items: [
+                        {
+                            title: '群組與成員管理',
+                            icon: 'corporate_fare',
+                            image: D+'B_群組與成員管理_0.png',
+                            steps: [
+                                { heading: '建立群組', body: '進入「設定」→「群組設定」→ 點選「建立」，輸入群組名稱並設定預設工項。建立完成後，複製群組代碼提供給成員加入。' },
+                                { heading: '打卡模式切換', body: '點擊群組設定中的「打卡模式」按鈕可在三種模式間切換：\n• 打卡：行程開始與結束各打一次卡\n• 簽到：行程結束後統一打卡\n• 關閉：不啟用打卡功能' },
+                                { heading: '成員狀態管理', body: '進入「設定」→「成員維護」，可對每位成員設定「啟用中」或「已停用」狀態，也可複製個人邀請連結。管理員另可進入群組成員設定，分別調整每人的時薪/日薪，以及交通方式（將用於智慧排班的路程計算）。' },
+                            ]
+                        },
+                        {
+                            title: '工項與薪資設定',
+                            icon: 'work',
+                            steps: [
+                                { heading: '新增工項', body: '在群組設定中展開「工項管理」→「新增工項」，填入工項名稱（如：居清），選擇計薪方式（時薪制／日薪制／案件制）並設定預設時數。這些數值將作為後續派工與薪資計算的預設值。', image: D+'B_工項與薪資設定_1.png' },
+                                { heading: '成員薪資設定', body: '在群組成員清單中點擊編輯圖示，可針對各成員設定不同的時薪或日薪，並設定交通方式（步行／騎車／開車等），系統將依此計算前往服務地點的路程時間。', image: D+'B_工項與薪資設定_2.png' },
+                            ]
+                        },
+                        {
+                            title: 'HoHo 訂單同步',
+                            icon: 'sync',
+                            steps: [
+                                { heading: '開啟同步功能', body: '進入「設定」→「訂閱管理」，找到公司名稱旁的「HOHO同步」開關並開啟。開啟後，系統將在每小時的第 15 分與第 45 分自動抓取 HoHo 供應商平台上已完成約時的訂單。', image: D+'B_HOHO訂單同步_1.png' },
+                                { heading: '自動指派邏輯', body: '若 HoHo 平台訂單已指派至特定子帳號，且該成員在系統中已綁定對應子帳號，訂單行程將自動指派給該成員，無需手動操作。', image: D+'B_HOHO訂單同步_2.png' },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    id: 'features',
+                    label: 'C',
+                    title: '核心操作功能',
+                    subtitle: 'Features',
+                    color: 'bg-emerald-50 text-emerald-600',
+                    accent: '#10B981',
+                    items: [
+                        {
+                            title: '行事曆運用',
+                            icon: 'calendar_month',
+                            steps: [
+                                { heading: '切換月／週模式', body: '行事曆頂部可切換「週」或「月」視圖，並可在「全部」、「個人」、特定群組之間切換視角。週模式底部的「當週人力分布」熱力圖，可一眼看出成員的空檔時段。', image: D+'C_行事曆運用_1.png' },
+                                { heading: '查看行程', body: '點擊行程卡片可執行快捷功能：前往 HoHo 平台查看訂單詳情、快速撥號給客戶，或開啟 Google Maps 導航至服務地點。群組啟用打卡功能時，行程開始前 1 小時會自動顯示打卡按鈕。', image: D+'C_行事曆運用_2.png' },
+                                { heading: '新增行程', body: '點擊畫面右下角「＋」按鈕可新增行程。管理員可依序選擇群組→工項→指派成員，並設定薪資條件。如需設定週期性行程，可勾選頻率（每週／隔週／每月）與星期，系統將自動生成系列行程。', image: D+'C_行事曆運用_3.png' },
+                                { heading: 'Google 日曆同步', body: '進入「設定」→「Google 日曆同步」，登入 Google 帳號後可選擇要同步的日曆。建議同步內容選「完整資料」（標題/內容/地址），以確保排班路程計算準確。可選擇單向（Google→系統）或雙向同步。', image: D+'C_行事曆運用_4.png' },
+                            ]
+                        },
+                        {
+                            title: '智慧排班',
+                            icon: 'auto_awesome',
+                            steps: [
+                                { heading: '設定排班條件', body: '點擊行事曆頂部的智慧排班圖示（✦），依介面引導依序設定：需比對的群組、成員範圍、服務地點。' },
+                                { heading: '加入日期時段', body: '設定完成後，點擊「＋」加入需要找尋空檔的日期，並選擇「上午」或「下午」。可同時加入多個時段。', image: D+'C_智慧排班_2.png' },
+                                { heading: '一鍵指派', body: '送出後系統會快速列出當日有空檔的成員（標示「當日首場優勢」等），可單獨指派或一鍵指派全部符合人選。', image: D+'C_智慧排班_3.png' },
+                            ]
+                        },
+                        {
+                            title: '打卡與補卡',
+                            icon: 'location_on',
+                            steps: [
+                                { heading: '打卡操作', body: '群組啟用打卡／簽到模式後，行程開始前 1 小時，行程卡片上會出現打卡按鈕。系統會記錄打卡時間與 GPS 位置。' },
+                                { heading: '申請補卡', body: '若因故未打卡，或簽到時數不足，行程卡片上（及出勤紀錄中）會顯示「申請補卡」按鈕。填寫原因後送出，紀錄狀態將標示為「審核中」。', image: D+'C_打卡與補卡_2.png' },
+                                { heading: '補卡審核（管理員）', body: '管理員在「出勤紀錄」頁的「待審核申請」區塊，可查看補卡申請詳情（成員姓名、行程、原因），核准後系統將自動更新出勤紀錄；拒絕則退回申請。', image: D+'C_打卡與補卡_3.png' },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    id: 'analytics',
+                    label: 'D',
+                    title: '數據統計',
+                    subtitle: 'Data & Analytics',
+                    color: 'bg-violet-50 text-violet-600',
+                    accent: '#8B5CF6',
+                    items: [
+                        {
+                            title: '出勤紀錄與薪資統計',
+                            icon: 'payments',
+                            steps: [
+                                { heading: '查看當月薪資', body: '進入底部導航「出勤紀錄」，頁面頂部直接顯示「本月薪資統計」金額（依已完成打卡／簽到的行程計算）。', image: D+'D_出勤紀錄與統計_1.png' },
+                                { heading: '打卡紀錄與 GPS', body: '每筆出勤紀錄展開後可查看行程的開始、結束打卡時間，以及打卡當下的 GPS 位置地圖，方便管理員確認服務是否在正確地點執行。', image: D+'D_出勤紀錄與統計_2.png' },
+                                { heading: '出勤統計總覽', body: '進入底部導航「出勤統計」，可查看個人累計工時、出勤達成率，以及出勤明細統計（實際工時 vs. 不足時數）。「時段熱力圖」以顏色深淺顯示一週各時段的出勤密度，幫助掌握服務高峰。', image: D+'D_出勤紀錄與統計_3.png' },
+                            ]
+                        },
+                        {
+                            title: '週期行程維護',
+                            icon: 'event_repeat',
+                            image: D+'D_週期行程維護_0.png',
+                            steps: [
+                                { heading: '查看週期系列', body: '進入底部導航「週期行程維護」，可切換「進行中」與「已結束」兩個分頁，查看所有週期性行程系列（如每週固定的訂閱者服務）。' },
+                                { heading: '編輯或終止週期', body: '點擊系列卡片可查看詳情（服務時間、重複週期、指派成員、地址）。如需調整，可直接在此更新系列事件內容；或回到行事曆的單一行程卡片，對個別事件進行獨立修改而不影響整個系列。' },
+                            ]
+                        },
+                    ]
+                },
+            ];
+
+            function DocsPage({ onBack, liffUrl }) {
+                const [openSection, setOpenSection] = useState('getstarted');
+                const [openItem, setOpenItem] = useState(null);
+
+                return h('main', { className: "relative h-screen w-full flex flex-col bg-[#F7F9FB] text-[#191C1E] overflow-hidden" },
+                    h('div', { className: "absolute top-[-5%] right-[-5%] w-72 h-72 bg-[#FFCE00]/10 rounded-full blur-[100px] pointer-events-none" }),
+                    h('div', { className: "absolute bottom-[-5%] left-[-5%] w-80 h-80 bg-[#006C49]/5 rounded-full blur-[100px] pointer-events-none" }),
+
+                    // Header
+                    h('header', { className: "shrink-0 px-5 pt-5 pb-3 flex items-center gap-3 md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto w-full" },
+                        h('button', {
+                            onClick: onBack,
+                            className: "w-9 h-9 rounded-xl bg-white shadow flex items-center justify-center text-slate-500 hover:bg-slate-50 shrink-0"
+                        }, h('span', { className: "ms text-[20px]" }, "arrow_back")),
+                        h('div', { className: "flex-1" },
+                            h('h1', { className: "text-lg font-extrabold tracking-tight text-[#191C1E]" }, "使用說明"),
+                            h('p', { className: "text-[9px] uppercase tracking-[0.25em] text-[#4E4632]/50" }, "User Guide")
+                        ),
+                        h('img', {
+                            src: "https://www.hohoho.com.tw/EDM/project/images/hoban_Schedule_logo.svg",
+                            className: "w-7 h-7 object-contain opacity-60"
+                        })
+                    ),
+
+                    // Tab bar
+                    h('div', { className: "shrink-0 px-5 pb-3 md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto w-full" },
+                        h('div', { className: "flex gap-2 overflow-x-auto no-scrollbar" },
+                            DOC_SECTIONS.map(sec =>
+                                h('button', {
+                                    key: sec.id,
+                                    onClick: () => { setOpenSection(sec.id); setOpenItem(null); },
+                                    className: `shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all ${openSection === sec.id ? 'bg-[#FFCE00] text-[#735C00] shadow' : 'bg-white/70 text-slate-500'}`
+                                }, sec.label + '. ' + sec.title)
+                            )
+                        )
+                    ),
+
+                    // Content
+                    h('div', { className: "flex-1 px-5 pb-28 min-h-0 overflow-hidden md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto w-full" },
+                        h('div', { className: "h-full overflow-y-auto no-scrollbar space-y-3 pb-4" },
+                            DOC_SECTIONS.filter(s => s.id === openSection).map(sec =>
+                                h('div', { key: sec.id, className: "space-y-3" },
+                                    h('div', { className: "flex items-center gap-3 py-1" },
+                                        h('span', { className: `w-7 h-7 rounded-lg ${sec.color} flex items-center justify-center text-xs font-black` }, sec.label),
+                                        h('div', null,
+                                            h('p', { className: "font-black text-slate-900 text-sm leading-tight" }, sec.title),
+                                            h('p', { className: "text-[9px] uppercase tracking-widest text-slate-400" }, sec.subtitle)
+                                        )
+                                    ),
+                                    sec.items.map((item, idx) => {
+                                        const key = sec.id + '_' + idx;
+                                        const isOpen = openItem === key;
+                                        return h('div', {
+                                            key,
+                                            className: "bg-white/70 backdrop-blur rounded-[20px] border border-white shadow-sm overflow-hidden"
+                                        },
+                                            h('button', {
+                                                onClick: () => setOpenItem(isOpen ? null : key),
+                                                className: "w-full flex items-center gap-3 px-4 py-4 text-left"
+                                            },
+                                                h('span', { className: "ms text-[22px] text-slate-400" }, item.icon),
+                                                h('span', { className: "flex-1 font-bold text-slate-800 text-[13px]" }, item.title),
+                                                h('span', { className: `ms text-[20px] text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}` }, "expand_more")
+                                            ),
+                                            isOpen && h('div', { className: "border-t border-slate-100" },
+                                                h('div', { className: "px-4 pt-3 pb-4 space-y-4" },
+                                                    item.steps.map((step, si) =>
+                                                        h('div', { key: si, className: "flex gap-3" },
+                                                            h('div', { className: `w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-white text-[10px] font-bold`, style: { backgroundColor: sec.accent } }, si + 1),
+                                                            h('div', { className: "flex-1 min-w-0" },
+                                                                h('p', { className: "font-bold text-slate-800 text-[12px] mb-0.5" }, step.heading),
+                                                                h('p', { className: "text-slate-500 text-[13px] leading-relaxed whitespace-pre-line" }, step.body),
+                                                                step.image && h('img', {
+                                                                    src: step.image,
+                                                                    alt: step.heading,
+                                                                    className: "mt-2 block w-full md:w-[70%] rounded-xl border border-slate-100 shadow-sm",
+                                                                    loading: "lazy"
+                                                                })
+                                                            )
+                                                        )
+                                                    )
+                                                ),
+                                                item.image && h('div', { className: "px-4 pb-4" },
+                                                    h('img', {
+                                                        src: item.image,
+                                                        alt: item.title,
+                                                        className: "block w-full md:w-[70%] rounded-xl border border-slate-100 shadow-sm",
+                                                        loading: "lazy"
+                                                    })
+                                                )
+                                            )
+                                        );
+                                    })
+                                )
+                            )
+                        )
+                    ),
+
+                    // Footer CTA
+                    h('footer', { className: "fixed bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#F7F9FB] via-[#F7F9FB]/90 to-transparent z-20" },
+                        h('div', { className: "md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto" },
+                            h(motion.button, {
+                                whileTap: { scale: 0.96 },
+                                onClick: () => { window.location.href = liffUrl; },
+                                className: "w-full py-4 rounded-[20px] font-black text-base shadow-xl flex items-center justify-center gap-3 bg-[#FFCE00] text-[#735C00]"
+                            },
+                                h('span', null, "立即開始使用"),
+                                h(motion.div, { animate: { x: [0, 5, 0] }, transition: { repeat: Infinity, duration: 1 } }, "→")
+                            ),
+                            h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-3" }, "Version 1.2.1 • © 2026 HOBAN CORP")
+                        )
+                    )
+                );
+            }
+
+            // ─────────────────────────────────────────────────────────────
 
             const root = ReactDOM.createRoot(document.getElementById('app'));
             root.render(h(App));
