@@ -59,27 +59,27 @@
         h1 { margin: 0; font-size: 24px; font-weight: 900; letter-spacing: -0.025em; }
         .subtitle { font-size: 10px; text-transform: uppercase; letter-spacing: 0.3em; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
 
-        section { border-bottom: 1px solid #f1f5f9; padding-bottom: 32px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-start; }
-        h2 { font-size: 28px; font-weight: 800; margin: 0 0 8px 0; color: #0f172a; }
-        .last-update { color: var(--text-muted); font-size: 14px; font-weight: 500; margin: 0; }
+        section { border-bottom: 1px solid #f1f5f9; padding-bottom: 24px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-start; }
+        h2 { font-size: 22px; font-weight: 800; margin: 0 0 8px 0; color: #0f172a; }
+        .last-update { color: var(--text-muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; }
 
-        article { margin-bottom: 48px; }
+        article { margin-bottom: 40px; }
         h3 { font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 12px; }
-        .dot { width: 6px; height: 24px; background: var(--brand-yellow); border-radius: 99px; }
-        p { line-height: 1.6; color: #475569; font-weight: 500; margin: 0; }
+        .dot { width: 6px; height: 24px; background: var(--brand-yellow); border-radius: 99px; flex-shrink: 0; }
+        p { line-height: 1.6; color: #475569; font-weight: 500; margin: 0 0 16px 0; font-size: 15px; }
 
-        .data-box { background: rgba(255,255,255,0.4); padding: 24px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.5); }
-        .data-item { display: flex; gap: 16px; margin-bottom: 12px; }
-        .data-item:last-child { margin-bottom: 0; }
-        .item-dot { width: 6px; height: 6px; background: #006C49; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
-        .data-text { font-size: 14px; }
-        .data-text strong { color: #1e293b; }
+        .data-box { background: rgba(255,255,255,0.4); padding: 20px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.5); margin-bottom: 16px; }
+        .box-label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px; display: block; }
+        
+        ul { list-style: none; padding: 0; margin: 0; }
+        li { position: relative; padding-left: 20px; margin-bottom: 8px; font-size: 14px; color: #475569; line-height: 1.5; font-weight: 500; }
+        li::before { content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: #cbd5e1; border-radius: 50%; }
 
         .contact-box { background: rgba(248,250,252,0.5); padding: 32px; border-radius: 32px; border: 1px dashed #e2e8f0; text-align: center; }
         .email-btn { 
             display: inline-flex; align-items: center; gap: 8px; background: #0f172a; color: white; 
             padding: 12px 24px; border-radius: 99px; font-weight: 700; text-decoration: none;
-            transition: all 0.2s; margin-top: 16px;
+            transition: all 0.2s; margin-top: 16px; font-size: 14px;
         }
         .email-btn:hover { background: #1e293b; transform: translateY(-2px); }
 
@@ -113,7 +113,7 @@
                 <section>
                     <div>
                         <h2>隱私權政策</h2>
-                        <p class="last-update">最後更新日期：2026-04-13</p>
+                        <p class="last-update">更新日期：2026-04-09</p>
                     </div>
                 </section>
 
@@ -123,38 +123,65 @@
                 </article>
 
                 <article>
-                    <h3><span class="dot"></span> 蒐集的資料</h3>
+                    <h3><span class="dot"></span> 角色與責任</h3>
+                    <p><strong>HO幫手</strong>：為服務實際提供者，決定個人資料蒐集之目的與方式（資料控管者）。</p>
+                    <p><strong>和班股份有限公司 (HOBAN CORP)</strong>：受託提供系統開發、維運與代管，可能於其網域/系統中處理資料以提供服務（資料處理者/受託處理者）。</p>
+                </article>
+
+                <article>
+                    <h3><span class="dot"></span> 我們可能蒐集的資料</h3>
                     <div class="data-box">
-                        <div class="data-item">
-                            <div class="item-dot"></div>
-                            <p class="data-text"><strong>帳號與識別：</strong> LINE 識別碼 (User ID)、顯示名稱、頭像、語言設定。</p>
-                        </div>
-                        <div class="data-item">
-                            <div class="item-dot"></div>
-                            <p class="data-text"><strong>使用業務資料：</strong> 群組關係、排班行程、出勤紀錄、薪資設定、員工清單及服務回饋。</p>
-                        </div>
-                        <div class="data-item">
-                            <div class="item-dot"></div>
-                            <p class="data-text"><strong>技術數據：</strong> 存取記錄、設備資訊及功能使用頻率。</p>
-                        </div>
+                        <span class="box-label">帳號與識別</span>
+                        <ul>
+                            <li>LINE 使用者識別碼（用於登入與帳號綁定）。</li>
+                            <li>顯示名稱、頭像（若你提供或系統取得）。</li>
+                            <li>聯絡資訊（例如電話，若你在設定中填寫）。</li>
+                        </ul>
+                    </div>
+                    <div class="data-box">
+                        <span class="box-label">使用與業務資料</span>
+                        <ul>
+                            <li>你建立/加入的群組、成員關係與角色（群主/管理員/成員）。</li>
+                            <li>排班/行程資料、出勤/簽到紀錄與相關統計資訊。</li>
+                            <li>薪資設定（例如時薪/日薪）等你或管理者輸入之資料。</li>
+                        </ul>
+                    </div>
+                    <div class="data-box">
+                        <span class="box-label">第三方連結資料（你授權後）</span>
+                        <ul>
+                            <li>Google 日曆連結狀態、授權帳號 Email（若你授權）。</li>
+                            <li>用於日曆同步所需之授權憑證，僅在提供同步功能所需範圍內使用。</li>
+                        </ul>
                     </div>
                 </article>
 
                 <article>
-                    <h3><span class="dot"></span> 資料使用目的</h3>
-                    <p>我們蒐集資料主要是為了提供、維持及改善我們的排班管理服務。具體包括：身分驗證、排班運算、薪資計算、系統通知發送以及優化用戶體驗。</p>
+                    <h3><span class="dot"></span> 使用目的</h3>
+                    <ul>
+                        <li>提供登入、帳號管理、群組/成員管理。</li>
+                        <li>提供排班、行程建立、出勤/簽到與統計分析功能。</li>
+                        <li>提供第三方服務整合（例如 Google 日曆同步）。</li>
+                        <li>維運、安全防護、錯誤排除、服務品質改善。</li>
+                    </ul>
                 </article>
 
                 <article>
-                    <h3><span class="dot"></span> 資料安全與儲存</h3>
-                    <p>我們使用高度安全的 Firebase 雲端加密儲存與 Google Cloud Platform 設施。除非符合法令規範、為完成服務所必要或經你明確同意，我們不會將你的個人資料提供給無關之第三方。</p>
+                    <h3><span class="dot"></span> 資料儲存與分享</h3>
+                    <p>- 我們使用高度安全的 Firebase 雲端服務儲存與處理資料，以提供登入、資料庫與相關功能。</p>
+                    <p>- 你授權的第三方整合（例如 Google）會依其政策處理你在該服務中的資料；本服務僅在你授權的範圍內存取並用於同步。</p>
+                    <p>- 除非為完成服務、符合法令或經你同意，我們不會任意將你的個人資料提供給無關第三方。</p>
+                </article>
+
+                <article>
+                    <h3><span class="dot"></span> 你的權利</h3>
+                    <p>你可向 <strong>HO幫手</strong> 申請查詢、閱覽、製給複製本、補充或更正、停止蒐集處理利用、刪除等。為保障帳戶安全，提出申請時可能需要進行身分驗證。</p>
                 </article>
 
                 <div class="contact-box">
                     <h3 style="justify-content: center;">聯絡我們</h3>
-                    <p style="font-size: 14px; margin-bottom: 8px;">若你對本政策或資料行使權利有任何疑問</p>
+                    <p style="font-size: 14px; margin-bottom: 8px;">若你對本政策或個人資料處理有任何疑問</p>
                     <a href="mailto:hoho.cs@hohoho.com.tw" class="email-btn">hoho.cs@hohoho.com.tw</a>
-                    <p style="font-size: 10px; color: #94a3b8; margin-top: 16px;">我們將於 3-5 個工作日內回覆並協助處理。</p>
+                    <p style="font-size: 10px; color: #94a3b8; margin-top: 16px;">我們將在受託範圍內協助處理技術性事項。</p>
                 </div>
             </div>
         </main>
