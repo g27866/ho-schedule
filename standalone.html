@@ -454,6 +454,16 @@
                                 { heading: '自訂工作日曆', body: '為了更方便的使用，建議您可在 Google 日曆將工作類的行程歸類在自訂日曆（例如：工作行程），並將這個日曆設定為同步目標。', image: D + 'E_其他說明_1.png' },
                             ]
                         },
+                        {
+                            title: '資料存取與可視範圍',
+                            icon: 'admin_panel_settings',
+                            steps: [
+                                { heading: '成員本人', body: '可查看自己的行程、出勤紀錄及薪資統計。' },
+                                { heading: '一般成員（同群組）', body: '僅能查看自己的排班行程、出勤紀錄及薪資統計，無法查看其他成員的任何資料。' },
+                                { heading: '群組管理員／群主', body: '可查看同群組所有成員的排班行程、出勤紀錄及薪資設定，以執行排班管理與薪資核算。' },
+                                { heading: '公司擁有者（Owner）', body: '可查看同公司（統一編號）旗下所有成員的基本資料及帳號狀態，並管理訂閱設定。' },
+                            ]
+                        },
                     ]
                 },
             ];
@@ -576,7 +586,15 @@
                                 h('span', null, "立即開始使用"),
                                 h(motion.div, { animate: { x: [0, 5, 0] }, transition: { repeat: Infinity, duration: 1 } }, "→")
                             ),
-                            h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase mt-3" }, "Version 1.2.1 • © 2026 HOBAN CORP")
+                            h('div', { className: "flex items-center justify-center gap-3 mt-3" },
+                                h('p', { className: "text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.1 • © 2026 HOBAN CORP"),
+                                h('span', { className: "text-slate-300 text-[10px]" }, "·"),
+                                h('a', {
+                                    href: "privacy.html",
+                                    onClick: (e) => { e.preventDefault(); window.location.href = "privacy.html"; },
+                                    className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
+                                }, "隱私權政策 Privacy Policy")
+                            )
                         )
                     )
                 );
