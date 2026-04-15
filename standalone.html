@@ -471,11 +471,16 @@
             function DocsPage({ onBack, liffUrl }) {
                 const [openItem, setOpenItem] = useState(null);
                 const itemRefs = React.useRef({});
+                const scrollContainerRef = React.useRef(null);
 
                 useEffect(() => {
-                    if (!openItem || !itemRefs.current[openItem]) return;
+                    if (!openItem || !itemRefs.current[openItem] || !scrollContainerRef.current) return;
+                    const container = scrollContainerRef.current;
+                    const el = itemRefs.current[openItem];
                     setTimeout(() => {
-                        itemRefs.current[openItem].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const containerTop = container.getBoundingClientRect().top;
+                        const elTop = el.getBoundingClientRect().top;
+                        container.scrollTo({ top: container.scrollTop + elTop - containerTop - 8, behavior: 'smooth' });
                     }, 50);
                 }, [openItem]);
 
@@ -500,8 +505,8 @@
                     ),
 
                     // Content — all sections vertical
-                    h('div', { className: "flex-1 px-5 pb-28 min-h-0 overflow-hidden md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto w-full" },
-                        h('div', { className: "h-full overflow-y-auto no-scrollbar space-y-6 pb-20" },
+                    h('div', { className: "flex-1 px-5 min-h-0 overflow-hidden md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto w-full" },
+                        h('div', { ref: scrollContainerRef, className: "h-full overflow-y-auto no-scrollbar space-y-6 pb-4" },
                             DOC_SECTIONS.map(sec =>
                                 h('div', { key: sec.id, className: "space-y-3" },
                                     // Section header
@@ -576,7 +581,7 @@
                     ),
 
                     // Footer CTA
-                    h('footer', { className: "fixed bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#F7F9FB] via-[#F7F9FB]/90 to-transparent z-20" },
+                    h('footer', { className: "shrink-0 px-5 pt-2 pb-5 bg-gradient-to-t from-[#F7F9FB] to-transparent" },
                         h('div', { className: "md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto" },
                             h(motion.button, {
                                 whileTap: { scale: 0.96 },
@@ -584,17 +589,18 @@
                                 className: "w-full py-4 rounded-[24px] font-black text-2xl shadow-xl flex items-center justify-center gap-3 bg-[#FFCE00] text-[#735C00]"
                             },
                                 h('span', null, "立即開始使用"),
-                                h(motion.div, { animate: { x: [0, 5, 0] }, transition: { repeat: Infinity, duration: 1 } }, "→")
-                            ),
-                            h('div', { className: "flex items-center justify-center gap-3 mt-3" },
-                                h('p', { className: "text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.1 • © 2026 HOBAN CORP"),
-                                h('span', { className: "text-slate-300 text-[10px]" }, "·"),
-                                h('a', {
-                                    href: "privacy.html",
-                                    onClick: (e) => { e.preventDefault(); window.location.href = "privacy.html"; },
-                                    className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
-                                }, "隱私權政策 Privacy Policy")
+                                h(motion.div, { animate: { x: [0, 5, 0] }, transition: { repeat: Infinity, duration: 1 } },
+                                    h('span', { className: "ms text-[20px]" }, "arrow_forward")
+                                )
                             )
+                        ),
+                        h('div', { className: "flex flex-col items-center gap-2 mt-4" },
+                            h('a', {
+                                href: "privacy.html",
+                                onClick: (e) => { e.preventDefault(); window.location.href = "privacy.html"; },
+                                className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
+                            }, "隱私權政策 Privacy Policy"),
+                            h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.1 • © 2026 HOBAN CORP")
                         )
                     )
                 );
