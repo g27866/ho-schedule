@@ -446,6 +446,14 @@
 
             function DocsPage({ onBack, liffUrl }) {
                 const [openItem, setOpenItem] = useState(null);
+                const itemRefs = React.useRef({});
+
+                useEffect(() => {
+                    if (!openItem || !itemRefs.current[openItem]) return;
+                    setTimeout(() => {
+                        itemRefs.current[openItem].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                }, [openItem]);
 
                 return h('main', { className: "relative h-screen w-full flex flex-col bg-[#F7F9FB] text-[#191C1E] overflow-hidden" },
                     h('div', { className: "absolute top-[-5%] right-[-5%] w-72 h-72 bg-[#FFCE00]/10 rounded-full blur-[100px] pointer-events-none" }),
@@ -486,6 +494,7 @@
                                         const isOpen = openItem === key;
                                         return h('div', {
                                             key,
+                                            ref: (el) => { itemRefs.current[key] = el; },
                                             className: "bg-white/70 backdrop-blur rounded-[20px] border border-white shadow-sm overflow-hidden"
                                         },
                                             h('button', {
