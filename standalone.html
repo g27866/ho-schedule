@@ -108,77 +108,77 @@
                             h(SplashScreen)
                         )
                         : showDocs
-                        ? h(motion.div, { key: "docs", initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: 40 }, transition: { duration: 0.3 } },
-                            h(DocsPage, { onBack: () => setShowDocs(false), liffUrl: LIFF_URL })
-                        )
-                        : h(motion.main, {
-                            key: "landing",
-                            initial: { opacity: 0 },
-                            animate: { opacity: 1 },
-                            className: "relative h-screen w-full flex flex-col bg-[#F7F9FB] text-[#191C1E] overflow-hidden"
-                        },
-                            h('div', { className: "absolute top-[-5%] right-[-5%] w-72 h-72 bg-[#FFCE00]/10 rounded-full blur-[100px] pointer-events-none" }),
-                            h('div', { className: "absolute bottom-[-5%] left-[-5%] w-80 h-80 bg-[#006C49]/5 rounded-full blur-[100px] pointer-events-none" }),
+                            ? h(motion.div, { key: "docs", initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: 40 }, transition: { duration: 0.3 } },
+                                h(DocsPage, { onBack: () => setShowDocs(false), liffUrl: LIFF_URL })
+                            )
+                            : h(motion.main, {
+                                key: "landing",
+                                initial: { opacity: 0 },
+                                animate: { opacity: 1 },
+                                className: "relative h-screen w-full flex flex-col bg-[#F7F9FB] text-[#191C1E] overflow-hidden"
+                            },
+                                h('div', { className: "absolute top-[-5%] right-[-5%] w-72 h-72 bg-[#FFCE00]/10 rounded-full blur-[100px] pointer-events-none" }),
+                                h('div', { className: "absolute bottom-[-5%] left-[-5%] w-80 h-80 bg-[#006C49]/5 rounded-full blur-[100px] pointer-events-none" }),
 
-                            h('header', { className: "shrink-0 p-6 flex flex-col items-center gap-3" },
-                                h(motion.div, {
-                                    initial: { y: -20, opacity: 0 },
-                                    animate: { y: 0, opacity: 1 },
-                                    className: "w-14 h-14 rounded-2xl bg-white shadow-md flex items-center justify-center border border-white"
-                                },
-                                    h('img', {
-                                        src: "https://www.hohoho.com.tw/EDM/project/images/hoban_Schedule_logo.svg",
-                                        className: "w-9 h-9 object-contain"
-                                    })
-                                ),
-                                h('div', { className: "text-center" },
-                                    h('h1', { className: "text-xl font-extrabold text-[#191C1E] tracking-tight" }, "HO幫手"),
-                                    h('p', { className: "text-[9px] uppercase tracking-[0.3em] text-[#4E4632]/60" }, "Scheduler Ecosystem")
-                                )
-                            ),
-
-                            h('div', { className: "flex-1 px-5 pb-24 min-h-0 relative overflow-hidden" },
-                                h(motion.div, {
-                                    initial: { y: 30, opacity: 0 },
-                                    animate: { y: 0, opacity: 1 },
-                                    transition: { delay: 0.2 },
-                                    className: "h-full bg-white/60 backdrop-blur-xl rounded-[32px] border border-white shadow-xl flex flex-col overflow-hidden md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto"
-                                },
-                                    h('div', {
-                                        className: "flex-1 overflow-y-auto p-6 space-y-8 scroll-smooth webkit-overflow-scrolling no-scrollbar"
+                                h('header', { className: "shrink-0 py-3 px-5 flex flex-col items-center gap-2" },
+                                    h(motion.div, {
+                                        initial: { y: -20, opacity: 0 },
+                                        animate: { y: 0, opacity: 1 },
+                                        className: "w-11 h-11 rounded-xl bg-white shadow-md flex items-center justify-center border border-white"
                                     },
-                                        h(MainContent)
-                                    )
-                                )
-                            ),
-
-                            h('footer', { className: "fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#F7F9FB] to-transparent z-20" },
-                                h('div', { className: "md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto" },
-                                    h(motion.button, {
-                                        whileTap: { scale: 0.96 },
-                                        onClick: () => setShowDocs(true),
-                                        className: "w-full py-5 rounded-[24px] font-bold text-lg shadow-xl transition-all duration-300 flex items-center justify-center gap-3 bg-[#FFCE00] text-[#735C00] shadow-[#FFCE00]/20 font-black"
-                                    },
-                                        h('span', null, "使用說明"),
-                                        h(motion.div, {
-                                            animate: { x: [0, 5, 0] },
-                                            transition: { repeat: Infinity, duration: 1 }
-                                        }, h('span', { className: "ms text-[20px]" }, "arrow_forward"))
+                                        h('img', {
+                                            src: "https://www.hohoho.com.tw/EDM/project/images/hoban_Schedule_logo.svg",
+                                            className: "w-7 h-7 object-contain"
+                                        })
+                                    ),
+                                    h('div', { className: "text-center" },
+                                        h('h1', { className: "text-base font-extrabold text-[#191C1E] tracking-tight" }, "HO幫手"),
+                                        h('p', { className: "text-[9px] uppercase tracking-[0.3em] text-[#4E4632]/60" }, "Scheduler Ecosystem")
                                     )
                                 ),
-                                h('div', { className: "flex flex-col items-center gap-2 mt-4" },
-                                    h('a', {
-                                        href: "privacy.html",
-                                        onClick: (e) => {
-                                            e.preventDefault();
-                                            window.location.href = "privacy.html";
+
+                                h('div', { className: "flex-1 px-5 pb-2 min-h-0 relative overflow-hidden" },
+                                    h(motion.div, {
+                                        initial: { y: 30, opacity: 0 },
+                                        animate: { y: 0, opacity: 1 },
+                                        transition: { delay: 0.2 },
+                                        className: "h-full bg-white/60 backdrop-blur-xl rounded-[32px] border border-white shadow-xl flex flex-col overflow-hidden md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto"
+                                    },
+                                        h('div', {
+                                            className: "flex-1 overflow-y-auto p-6 space-y-8 scroll-smooth webkit-overflow-scrolling no-scrollbar"
                                         },
-                                        className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
-                                    }, "隱私權政策 Privacy Policy"),
-                                    h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.1 • © 2026 HOBAN CORP")
+                                            h(MainContent)
+                                        )
+                                    )
+                                ),
+
+                                h('footer', { className: "shrink-0 px-5 pt-2 pb-5 bg-gradient-to-t from-[#F7F9FB] to-transparent" },
+                                    h('div', { className: "md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto" },
+                                        h(motion.button, {
+                                            whileTap: { scale: 0.96 },
+                                            onClick: () => setShowDocs(true),
+                                            className: "w-full py-4 rounded-[24px] font-bold text-2xl shadow-xl transition-all duration-300 flex items-center justify-center gap-3 bg-[#FFCE00] text-[#735C00] shadow-[#FFCE00]/20 font-black"
+                                        },
+                                            h('span', null, "使用說明"),
+                                            h(motion.div, {
+                                                animate: { x: [0, 5, 0] },
+                                                transition: { repeat: Infinity, duration: 1 }
+                                            }, h('span', { className: "ms text-[20px]" }, "arrow_forward"))
+                                        )
+                                    ),
+                                    h('div', { className: "flex flex-col items-center gap-2 mt-4" },
+                                        h('a', {
+                                            href: "privacy.html",
+                                            onClick: (e) => {
+                                                e.preventDefault();
+                                                window.location.href = "privacy.html";
+                                            },
+                                            className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
+                                        }, "隱私權政策 Privacy Policy"),
+                                        h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.1 • © 2026 HOBAN CORP")
+                                    )
                                 )
                             )
-                        )
                 );
             }
 
@@ -247,7 +247,7 @@
             }
 
             function FeatureShowcase() {
-                return h('div', { className: "space-y-4 pb-32" },
+                return h('div', { className: "space-y-4 pb-4" },
                     h(FeatureItem, {
                         icon: "auto_awesome",
                         color: "bg-blue-50 text-blue-600",
@@ -303,16 +303,16 @@
                             title: '帳號註冊',
                             icon: 'person',
                             steps: [
-                                { heading: '填寫基本資料', body: '完成服務訂閱後，您會收到專屬的註冊連結。請公司主要管理者先行完成註冊（設定顯示名稱與手機號碼），再複製邀請連結邀請其他成員加入。', image: D+'A_帳號註冊_2.png' },
-                                { heading: 'LINE 帳號認證', body: '首次使用時，系統會請您授權 LINE 帳號。請保留「主個人檔案資訊」、「傳送訊息至聊天室」、「內部識別碼」三項預設開啟，避免造成服務異常。', image: D+'A_帳號註冊_1.png' },
+                                { heading: '填寫基本資料', body: '完成服務訂閱後，您會收到專屬的註冊連結。請公司主要管理者先行完成註冊（設定顯示名稱與手機號碼），再複製邀請連結邀請其他成員加入。' },
+                                { heading: 'LINE 帳號認證', body: '首次使用時，系統會請您授權 LINE 帳號。請保留「主個人檔案資訊」、「傳送訊息至聊天室」、「內部識別碼」三項預設開啟，避免造成服務異常。', image: D + 'A_帳號註冊_1.png' },
                             ]
                         },
                         {
                             title: '加入群組',
                             icon: 'group_add',
                             steps: [
-                                { heading: '取得群組代碼', body: '向公司管理員索取群組代碼（例如：BE154T）。', image: D+'A_加入群組_1.png' },
-                                { heading: '輸入代碼加入', body: '進入底部導航「設定」→「群組設定」→ 點選「加入」，貼上群組代碼後點擊「加入群組」即可完成。加入後才能接受工作指派。', image: D+'A_加入群組_2.png' },
+                                { heading: '取得群組代碼', body: '向公司管理員索取群組代碼（例如：BE154T）。', image: D + 'A_加入群組_1.png' },
+                                { heading: '輸入代碼加入', body: '進入底部導航「設定」→「群組設定」→ 點選「加入」，貼上群組代碼後點擊「加入群組」即可完成。加入後才能接受工作指派。', image: D + 'A_加入群組_2.png' },
                             ]
                         },
                     ]
@@ -326,29 +326,35 @@
                     accent: '#F59E0B',
                     items: [
                         {
-                            title: '群組與成員管理',
+                            title: '群組管理',
                             icon: 'corporate_fare',
-                            image: D+'B_群組與成員管理_0.png',
                             steps: [
-                                { heading: '建立群組', body: '進入「設定」→「群組設定」→ 點選「建立」，輸入群組名稱並設定預設工項。建立完成後，複製群組代碼提供給成員加入。', image: D+'B_群組與成員管理_1.png' },
+                                { heading: '建立群組', parts: [{ icon: 'edit_square', text: '進入「設定」→「群組設定」→ 點選「建立」，輸入群組名稱並設定預設工項。' }, { icon: 'content_copy', text: '建立完成後，複製群組代碼提供給成員加入。' }], image: D + 'B_群組與成員管理_1.png' },
                                 { heading: '打卡模式切換', body: '點擊群組設定中的「打卡模式」按鈕可在三種模式間切換：\n• 打卡：行程開始與結束各打一次卡\n• 簽到：行程結束後統一打卡\n• 關閉：不啟用打卡功能' },
-                                { heading: '成員狀態管理', body: '進入「設定」→「成員維護」，可對每位成員設定「啟用中」或「已停用」狀態，也可複製個人邀請連結。管理員另可進入群組成員設定，分別調整每人的時薪/日薪，以及交通方式（將用於智慧排班的路程計算）。' },
                             ]
                         },
                         {
                             title: '工項與薪資設定',
                             icon: 'work',
                             steps: [
-                                { heading: '新增工項', body: '在群組設定中展開「工項管理」→「新增工項」，填入工項名稱（如：居清），選擇計薪方式（時薪制／日薪制／案件制）並設定預設時數。這些數值將作為後續派工與薪資計算的預設值。', image: D+'B_工項與薪資設定_1.png' },
-                                { heading: '成員薪資設定', body: '在群組成員清單中點擊編輯圖示，可針對各成員設定不同的時薪或日薪，並設定交通方式（步行／騎車／開車等），系統將依此計算前往服務地點的路程時間。', image: D+'B_工項與薪資設定_2.png' },
+                                { heading: '新增工項', body: '在群組設定中展開「工項管理」→「新增工項」，填入工項名稱（如：居清），選擇計薪方式（時薪制／日薪制／案件制）並設定預設時數。這些數值將作為後續派工與薪資計算的預設值。', image: D + 'B_工項與薪資設定_1.png' },
+                                { heading: '群組成員薪資設定', parts: [{ icon: 'edit_square', text: '在群組成員清單中點擊編輯圖示，可針對各成員設定不同的時薪或日薪，並設定交通方式（步行／騎車／開車），系統將依此計算前往服務地點的路程時間。' }, { icon: 'Verified_User', text: '將成員設定為「管理員」，再次點擊將會設定為「一般成員」' }, { icon: 'Person_Remove', text: '將成員從群組中移除' }], image: D + 'B_工項與薪資設定_2.png' },
+                            ]
+                        },
+                        {
+                            title: '公司成員管理',
+                            icon: 'Emoji_People',
+                            steps: [
+                                { heading: '成員狀態管理', body: '「設定」→「管理功能」→「成員維護」，可對每位成員設定「啟用中」或「已停用」狀態。', image: D + 'B_公司成員管理_1.png' },
+                                { heading: '邀請成員加入', icon: 'content_copy', body: '「設定」→「管理功能」→「訂閱管理」可複製邀請連結，邀請公司成員加入。', image: D + 'B_公司成員管理_2.png' },
                             ]
                         },
                         {
                             title: 'HoHo 訂單同步',
                             icon: 'sync',
                             steps: [
-                                { heading: '開啟同步功能', body: '進入「設定」→「訂閱管理」，找到公司名稱旁的「HOHO同步」開關並開啟。開啟後，系統將在每小時的第 15 分與第 45 分自動抓取 HoHo 供應商平台上已完成約時的訂單。', image: D+'B_HOHO訂單同步_1.png' },
-                                { heading: '自動指派邏輯', body: '若 HoHo 平台訂單已指派至特定子帳號，且該成員在系統中已綁定對應子帳號，訂單行程將自動指派給該成員，無需手動操作。', image: D+'B_HOHO訂單同步_2.png' },
+                                { heading: '開啟同步功能', body: '進入「設定」→「訂閱管理」，找到公司名稱旁的「HOHO同步」開關並開啟。開啟後，系統將在每小時的第 15 分與第 45 分自動抓取 HoHo 供應商平台上已完成約時的訂單。', image: D + 'B_HOHO訂單同步_1.png' },
+                                { heading: '自動指派邏輯(未來功能)', parts: [{ text: '若 HoHo 平台訂單已指派至特定子帳號，且該成員在系統中已綁定對應子帳號，訂單行程將自動指派給該成員，無需手動操作。' }, { icon: 'open_in_new', text: '點選訂單右側圖示，可跳轉開啟供應商平台查看訂單詳情' }], image: D + 'B_HOHO訂單同步_2.png' },
                             ]
                         },
                     ]
@@ -365,19 +371,19 @@
                             title: '行事曆運用',
                             icon: 'calendar_month',
                             steps: [
-                                { heading: '切換月／週模式', body: '行事曆頂部可切換「週」或「月」視圖，並可在「全部」、「個人」、特定群組之間切換視角。週模式底部的「當週人力分布」熱力圖，可一眼看出成員的空檔時段。', image: D+'C_行事曆運用_1.png' },
-                                { heading: '查看行程', body: '點擊行程卡片可執行快捷功能：前往 HoHo 平台查看訂單詳情、快速撥號給客戶，或開啟 Google Maps 導航至服務地點。群組啟用打卡功能時，行程開始前 1 小時會自動顯示打卡按鈕。', image: D+'C_行事曆運用_2.png' },
-                                { heading: '新增行程', body: '點擊畫面右下角「＋」按鈕可新增行程。管理員可依序選擇群組→工項→指派成員，並設定薪資條件。如需設定週期性行程，可勾選頻率（每週／隔週／每月）與星期，系統將自動生成系列行程。', image: D+'C_行事曆運用_3.png' },
-                                { heading: 'Google 日曆同步', body: '進入「設定」→「Google 日曆同步」，登入 Google 帳號後可選擇要同步的日曆。建議同步內容選「完整資料」（標題/內容/地址），以確保排班路程計算準確。可選擇單向（Google→系統）或雙向同步。', image: D+'C_行事曆運用_4.png' },
+                                { heading: '切換月／週模式', body: '行事曆頂部可切換「週」或「月」視圖，並可在「全部」、「個人」、特定群組之間切換視角。週模式底部的「當週人力分布」熱力圖，可一眼看出成員的空檔時段。', image: D + 'C_行事曆運用_1.png' },
+                                { heading: '查看行程', body: '點擊行程卡片可執行快捷功能：前往 HoHo 平台查看訂單詳情、快速撥號給客戶，或開啟 Google Maps 導航至服務地點。群組啟用打卡功能時，行程開始前 1 小時會自動顯示打卡按鈕。', image: D + 'C_行事曆運用_2.png' },
+                                { heading: '新增行程', body: '點擊畫面右下角「＋」按鈕可新增行程。管理員可依序選擇群組→工項→指派成員，並設定薪資條件。如需設定週期性行程，可勾選頻率（每週／隔週／每月）與星期，系統將自動生成系列行程。', image: D + 'C_行事曆運用_3.png' },
+                                { heading: 'Google 日曆同步', body: '進入「設定」→「Google 日曆同步」，登入 Google 帳號後可選擇要同步的日曆。建議同步內容選「完整資料」（標題/內容/地址），以確保排班路程計算準確。可選擇單向（Google→系統）或雙向同步。', image: D + 'C_行事曆運用_4.png' },
                             ]
                         },
                         {
                             title: '智慧排班',
                             icon: 'auto_awesome',
                             steps: [
-                                { heading: '設定排班條件', body: '點擊行事曆頂部的智慧排班圖示（✦），依介面引導依序設定：需比對的群組、成員範圍、服務地點。' },
-                                { heading: '加入日期時段', body: '設定完成後，點擊「＋」加入需要找尋空檔的日期，並選擇「上午」或「下午」。可同時加入多個時段。', image: D+'C_智慧排班_2.png' },
-                                { heading: '一鍵指派', body: '送出後系統會快速列出當日有空檔的成員（標示「當日首場優勢」等），可單獨指派或一鍵指派全部符合人選。', image: D+'C_智慧排班_3.png' },
+                                { heading: '設定排班條件', icon: 'Wand_Stars', body: '點擊行事曆頂部的智慧排班圖示(🪄)，依介面引導依序設定：需比對的群組、成員範圍、服務地點。' },
+                                { heading: '加入日期時段', body: '設定完成後，點擊「＋」加入需要找尋空檔的日期，並選擇「上午」或「下午」。可同時加入多個時段。', image: D + 'C_智慧排班_2.png' },
+                                { heading: '一鍵指派', body: '送出後系統會快速列出當日有空檔的成員（標示「當日首場優勢」等），可單獨指派或一鍵指派全部符合人選。', image: D + 'C_智慧排班_3.png' },
                             ]
                         },
                         {
@@ -385,8 +391,8 @@
                             icon: 'location_on',
                             steps: [
                                 { heading: '打卡操作', body: '群組啟用打卡／簽到模式後，行程開始前 1 小時，行程卡片上會出現打卡按鈕。系統會記錄打卡時間與 GPS 位置。' },
-                                { heading: '申請補卡', body: '若因故未打卡，或簽到時數不足，行程卡片上（及出勤紀錄中）會顯示「申請補卡」按鈕。填寫原因後送出，紀錄狀態將標示為「審核中」。', image: D+'C_打卡與補卡_2.png' },
-                                { heading: '補卡審核（管理員）', body: '管理員在「出勤紀錄」頁的「待審核申請」區塊，可查看補卡申請詳情（成員姓名、行程、原因），核准後系統將自動更新出勤紀錄；拒絕則退回申請。', image: D+'C_打卡與補卡_3.png' },
+                                { heading: '申請補卡', body: '若因故未打卡，或簽到時數不足，行程卡片上（及出勤紀錄中）會顯示「申請補卡」按鈕。填寫原因後送出，紀錄狀態將標示為「審核中」。', image: D + 'C_打卡與補卡_2.png' },
+                                { heading: '補卡審核（管理員）', body: '管理員在「出勤紀錄」頁的「待審核申請」區塊，可查看補卡申請詳情（成員姓名、行程、原因），核准後系統將自動更新出勤紀錄；拒絕則退回申請。', image: D + 'C_打卡與補卡_3.png' },
                             ]
                         },
                     ]
@@ -403,15 +409,15 @@
                             title: '出勤紀錄與薪資統計',
                             icon: 'payments',
                             steps: [
-                                { heading: '查看當月薪資', body: '進入底部導航「出勤紀錄」，頁面頂部直接顯示「本月薪資統計」金額（依已完成打卡／簽到的行程計算）。', image: D+'D_出勤紀錄與統計_1.png' },
-                                { heading: '打卡紀錄與 GPS', body: '每筆出勤紀錄展開後可查看行程的開始、結束打卡時間，以及打卡當下的 GPS 位置地圖，方便管理員確認服務是否在正確地點執行。', image: D+'D_出勤紀錄與統計_2.png' },
-                                { heading: '出勤統計總覽', body: '進入底部導航「出勤統計」，可查看個人累計工時、出勤達成率，以及出勤明細統計（實際工時 vs. 不足時數）。「時段熱力圖」以顏色深淺顯示一週各時段的出勤密度，幫助掌握服務高峰。', image: D+'D_出勤紀錄與統計_3.png' },
+                                { heading: '查看當月薪資', body: '進入底部導航「出勤紀錄」，頁面頂部直接顯示「本月薪資統計」金額（依已完成打卡／簽到的行程計算）。', image: D + 'D_出勤紀錄與統計_1.png' },
+                                { heading: '打卡紀錄與 GPS', body: '每筆出勤紀錄展開後可查看行程的開始、結束打卡時間，以及打卡當下的 GPS 位置地圖，方便管理員確認服務是否在正確地點執行。', image: D + 'D_出勤紀錄與統計_2.png' },
+                                { heading: '出勤統計總覽', body: '進入底部導航「出勤統計」，可查看個人累計工時、出勤達成率，以及出勤明細統計（實際工時 vs. 不足時數）。「時段熱力圖」以顏色深淺顯示一週各時段的出勤密度，幫助掌握服務高峰。', image: D + 'D_出勤紀錄與統計_3.png' },
                             ]
                         },
                         {
                             title: '週期行程維護',
                             icon: 'event_repeat',
-                            image: D+'D_週期行程維護_0.png',
+                            image: D + 'D_週期行程維護_0.png',
                             steps: [
                                 { heading: '查看週期系列', body: '進入底部導航「週期行程維護」，可切換「進行中」與「已結束」兩個分頁，查看所有週期性行程系列（如每週固定的訂閱者服務）。' },
                                 { heading: '編輯或終止週期', body: '點擊系列卡片可查看詳情（服務時間、重複週期、指派成員、地址）。如需調整，可直接在此更新系列事件內容；或回到行事曆的單一行程卡片，對個別事件進行獨立修改而不影響整個系列。' },
@@ -431,7 +437,7 @@
                             title: 'Google 日曆設定建議',
                             icon: 'tips_and_updates',
                             steps: [
-                                { heading: '自訂工作日曆', body: '為了更方便的使用，建議您可在 Google 日曆將工作類的行程歸類在自訂日曆（例如：工作行程），並將這個日曆設定為同步目標。', image: D+'E_其他說明_1.png' },
+                                { heading: '自訂工作日曆', body: '為了更方便的使用，建議您可在 Google 日曆將工作類的行程歸類在自訂日曆（例如：工作行程），並將這個日曆設定為同步目標。', image: D + 'E_其他說明_1.png' },
                             ]
                         },
                     ]
@@ -497,7 +503,19 @@
                                                             h('div', { className: `w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-white text-[10px] font-bold`, style: { backgroundColor: sec.accent } }, si + 1),
                                                             h('div', { className: "flex-1 min-w-0" },
                                                                 h('p', { className: "font-bold text-slate-800 text-[12px] mb-0.5" }, step.heading),
-                                                                h('p', { className: "text-slate-500 text-[13px] leading-relaxed whitespace-pre-line" }, step.body),
+                                                                step.parts
+                                                                    ? h('div', { className: "space-y-1.5" },
+                                                                        step.parts.map((part, pi) =>
+                                                                            h('p', { key: pi, className: "text-slate-500 text-[13px] leading-relaxed" },
+                                                                                h('span', { className: "ms text-[16px] align-middle mr-1", style: { color: sec.accent } }, part.icon),
+                                                                                part.text
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                    : h('p', { className: "text-slate-500 text-[13px] leading-relaxed whitespace-pre-line" },
+                                                                        step.icon && h('span', { className: "ms text-[16px] align-middle mr-1", style: { color: sec.accent } }, step.icon),
+                                                                        step.body
+                                                                    ),
                                                                 step.image && h('img', {
                                                                     src: step.image,
                                                                     alt: step.heading,
