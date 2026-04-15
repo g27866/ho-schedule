@@ -381,7 +381,7 @@
                             title: '智慧排班',
                             icon: 'auto_awesome',
                             steps: [
-                                { heading: '設定排班條件', icon: 'Wand_Stars', body: '點擊行事曆頂部的智慧排班圖示(🪄)，依介面引導依序設定：需比對的群組、成員範圍、服務地點。' },
+                                { heading: '設定排班條件', icon: 'Wand_Stars', body: '點擊行事曆頂部的智慧排班圖示，依介面引導依序設定：需比對的群組、成員範圍、服務地點。' },
                                 { heading: '加入日期時段', body: '設定完成後，點擊「＋」加入需要找尋空檔的日期，並選擇「上午」或「下午」。可同時加入多個時段。', image: D + 'C_智慧排班_2.png' },
                                 { heading: '一鍵指派', body: '送出後系統會快速列出當日有空檔的成員（標示「當日首場優勢」等），可單獨指派或一鍵指派全部符合人選。', image: D + 'C_智慧排班_3.png' },
                             ]
@@ -469,7 +469,7 @@
 
                     // Content — all sections vertical
                     h('div', { className: "flex-1 px-5 pb-28 min-h-0 overflow-hidden md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto w-full" },
-                        h('div', { className: "h-full overflow-y-auto no-scrollbar space-y-6 pb-4" },
+                        h('div', { className: "h-full overflow-y-auto no-scrollbar space-y-6 pb-20" },
                             DOC_SECTIONS.map(sec =>
                                 h('div', { key: sec.id, className: "space-y-3" },
                                     // Section header
@@ -493,7 +493,7 @@
                                                 className: "w-full flex items-center gap-3 px-4 py-4 text-left"
                                             },
                                                 h('span', { className: "ms text-[22px] text-slate-400" }, item.icon),
-                                                h('span', { className: "flex-1 font-bold text-slate-800 text-[13px]" }, item.title),
+                                                h('span', { className: "flex-1 font-bold text-slate-800 text-[14px]" }, item.title),
                                                 h('span', { className: `ms text-[20px] text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}` }, "expand_more")
                                             ),
                                             isOpen && h('div', { className: "border-t border-slate-100" },
@@ -502,18 +502,18 @@
                                                         h('div', { key: si, className: "flex gap-3" },
                                                             h('div', { className: `w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-white text-[10px] font-bold`, style: { backgroundColor: sec.accent } }, si + 1),
                                                             h('div', { className: "flex-1 min-w-0" },
-                                                                h('p', { className: "font-bold text-slate-800 text-[12px] mb-0.5" }, step.heading),
+                                                                h('p', { className: "font-bold text-slate-800 text-[14px] mb-1" }, step.heading),
                                                                 step.parts
-                                                                    ? h('div', { className: "space-y-1.5" },
+                                                                    ? h('div', { className: "space-y-2" },
                                                                         step.parts.map((part, pi) =>
-                                                                            h('p', { key: pi, className: "text-slate-500 text-[13px] leading-relaxed" },
-                                                                                h('span', { className: "ms text-[16px] align-middle mr-1", style: { color: sec.accent } }, part.icon),
+                                                                            h('p', { key: pi, className: "text-slate-500 text-[15px] leading-relaxed" },
+                                                                                h('span', { className: "ms text-[18px] align-middle mr-1", style: { color: sec.accent } }, part.icon),
                                                                                 part.text
                                                                             )
                                                                         )
                                                                     )
-                                                                    : h('p', { className: "text-slate-500 text-[13px] leading-relaxed whitespace-pre-line" },
-                                                                        step.icon && h('span', { className: "ms text-[16px] align-middle mr-1", style: { color: sec.accent } }, step.icon),
+                                                                    : h('p', { className: "text-slate-500 text-[15px] leading-relaxed whitespace-pre-line" },
+                                                                        step.icon && h('span', { className: "ms text-[18px] align-middle mr-1", style: { color: sec.accent } }, step.icon),
                                                                         step.body
                                                                     ),
                                                                 step.image && h('img', {
