@@ -12,22 +12,31 @@
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;700&display=swap"
         rel="stylesheet">
     <style>
+        /* ── 色彩變數 ─────────────────────────────────────────── */
         :root {
-            --bg-color: #F7F9FB;
-            --text-main: #191C1E;
-            --text-muted: #64748b;
-            --brand-green: #006C49;
-            --brand-yellow: #FFCE00;
-            --brand-dark: #735C00;
+            --bg-color:       #F7F9FB;
+            --text-heading:   #0f172a;   /* 標題、卡片主標 */
+            --text-body:      #475569;   /* 段落、條列 */
+            --text-secondary: #64748b;   /* 卡片描述、次要說明 */
+            --text-medium:    #334155;   /* 強調文字、表格標籤 */
+            --text-note:      #94a3b8;   /* 備註小字 */
+            --text-faint:     #cbd5e1;   /* 版權等極淡文字 */
+            --border-subtle:  #f1f5f9;   /* 卡片邊框、分隔線 */
+            --surface:        rgba(248, 250, 252, 0.8); /* 卡片底色 */
+            --brand-green:    #006C49;
+            --brand-yellow:   #FFCE00;
+            --brand-dark:     #735C00;
         }
 
+        /* ── Reset ───────────────────────────────────────────── */
         * { box-sizing: border-box; }
 
+        /* ── 頁面基底 ─────────────────────────────────────────── */
         body {
             font-family: 'Inter', -apple-system, sans-serif;
             margin: 0;
             background-color: var(--bg-color);
-            color: var(--text-main);
+            color: var(--text-body);
             overflow-x: hidden;
             opacity: 0;
             animation: fadeIn 0.6s ease-out forwards;
@@ -45,11 +54,11 @@
             position: relative;
             z-index: 10;
         }
-
         @media (min-width: 640px) {
             .container { padding: 80px 24px; }
         }
 
+        /* ── 卡片容器 ─────────────────────────────────────────── */
         .glass-card {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px);
@@ -60,22 +69,18 @@
             overflow: hidden;
             margin-bottom: 48px;
         }
-
-        .card-content {
-            padding: 32px;
-        }
-
+        .card-content { padding: 32px; }
         @media (min-width: 640px) {
             .card-content { padding: 48px; }
         }
 
+        /* ── 頁首 ─────────────────────────────────────────────── */
         header {
             margin-bottom: 48px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-
         .logo-box {
             width: 64px;
             height: 64px;
@@ -89,48 +94,25 @@
             margin-bottom: 16px;
         }
 
+        /* ── 字型階層 ─────────────────────────────────────────── */
+        /* Lv1 — 頁面主標題 */
         h1 {
             margin: 0;
             font-size: 24px;
             font-weight: 900;
             letter-spacing: -0.025em;
+            color: var(--text-heading);
         }
 
-        .subtitle {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            color: var(--text-muted);
-            font-weight: 700;
-            margin-top: 4px;
-        }
-
-        .policy-header {
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 24px;
-            margin-bottom: 32px;
-        }
-
+        /* Lv2 — 卡片區塊標題 */
         h2 {
             font-size: 22px;
             font-weight: 800;
             margin: 0 0 8px 0;
-            color: #0f172a;
+            color: var(--text-heading);
         }
 
-        .last-update {
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin: 0;
-        }
-
-        article {
-            margin-bottom: 40px;
-        }
-
+        /* Lv3 — 章節標題 */
         h3 {
             font-size: 17px;
             font-weight: 700;
@@ -138,9 +120,108 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #0f172a;
+            color: var(--text-heading);
         }
 
+        /* Lv4 — 卡片內主標（角色名、服務名等） */
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* Lv5 — data-box 內次分類標題（個人行程／群組行程） */
+        .subheading {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-medium);
+            margin: 0 0 4px 0;
+        }
+        .subheading + ul { margin-bottom: 0; }
+        .subheading:not(:first-of-type) { margin-top: 10px; }
+
+        /* ── 內文 ─────────────────────────────────────────────── */
+        p {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.7;
+            color: var(--text-body);
+            margin: 0 0 12px 0;
+        }
+        p:last-child { margin-bottom: 0; }
+
+        /* 卡片描述（灰色說明文字） */
+        .card-desc {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .card-desc strong { color: var(--text-medium); }
+
+        /* 備註小字 */
+        .note-text {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--text-note);
+            margin-top: 8px;
+        }
+
+        /* 標籤（大寫小字） */
+        .label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* 副標題（Privacy Policy、更新日期） */
+        .subtitle,
+        .last-update {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin: 4px 0 0;
+        }
+
+        /* ── 條列 ─────────────────────────────────────────────── */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+        li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 5px;
+            height: 5px;
+            background: var(--text-faint);
+            border-radius: 50%;
+        }
+        li:last-child { margin-bottom: 0; }
+        li strong { color: var(--text-medium); }
+
+        /* ── 裝飾元素 ─────────────────────────────────────────── */
         .dot {
             width: 6px;
             height: 24px;
@@ -149,124 +230,28 @@
             flex-shrink: 0;
         }
 
-        p {
-            line-height: 1.7;
-            color: #475569;
-            font-weight: 500;
-            margin: 0 0 12px 0;
-            font-size: 14px;
+        .policy-header {
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 24px;
+            margin-bottom: 32px;
         }
 
-        p:last-child { margin-bottom: 0; }
+        article { margin-bottom: 40px; }
 
-        .data-box {
-            background: rgba(248, 250, 252, 0.8);
-            padding: 18px 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(241, 245, 249, 1);
-            margin-bottom: 12px;
-        }
-
-        .box-label {
-            font-size: 10px;
-            font-weight: 800;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        li {
-            position: relative;
-            padding-left: 18px;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #475569;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        li::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 8px;
-            width: 5px;
-            height: 5px;
-            background: #cbd5e1;
-            border-radius: 50%;
-        }
-
-        li:last-child { margin-bottom: 0; }
-
-        /* 可視範圍表格 */
-        .visibility-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .visibility-row {
-            background: rgba(248, 250, 252, 0.8);
-            border: 1px solid #f1f5f9;
-            border-radius: 20px;
-            padding: 16px 20px;
-        }
-
-        .visibility-role {
-            font-size: 13px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 6px;
-        }
-
-        .visibility-desc {
-            font-size: 13px;
-            color: #64748b;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .visibility-desc strong {
-            color: #334155;
-        }
-
-        /* 第三方區塊 */
-        .third-party-box {
-            background: rgba(248, 250, 252, 0.8);
-            border: 1px solid #f1f5f9;
-            border-radius: 20px;
-            padding: 18px 20px;
-            margin-bottom: 12px;
-        }
-
-        .third-party-name {
-            font-size: 13px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .third-party-desc {
-            font-size: 13px;
-            color: #64748b;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* 保存期限表格 */
+        /* ── 通用資料卡片 ──────────────────────────────────────── */
+        .data-box,
+        .visibility-row,
+        .third-party-box,
         .retention-row {
-            background: rgba(248, 250, 252, 0.8);
-            border: 1px solid #f1f5f9;
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
             border-radius: 20px;
+        }
+
+        .data-box          { padding: 18px 20px; margin-bottom: 12px; }
+        .visibility-row    { padding: 16px 20px; }
+        .third-party-box   { padding: 18px 20px; margin-bottom: 12px; }
+        .retention-row {
             padding: 14px 20px;
             margin-bottom: 8px;
             display: flex;
@@ -274,58 +259,51 @@
             align-items: flex-start;
             gap: 16px;
         }
+        .retention-row:last-child { margin-bottom: 0; }
 
+        /* 可視範圍 */
+        .visibility-grid { display: flex; flex-direction: column; gap: 8px; }
+
+        /* 保存期限欄位 */
         .retention-label {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
-            color: #334155;
+            color: var(--text-medium);
             white-space: nowrap;
             flex-shrink: 0;
         }
-
         .retention-value {
-            font-size: 13px;
-            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
             text-align: right;
             line-height: 1.5;
         }
 
-        /* 你的權利 */
-        .rights-list li {
-            padding-left: 0;
-            margin-bottom: 14px;
-        }
-
-        .rights-list li::before { display: none; }
-
+        /* ── 你的權利條列 ─────────────────────────────────────── */
+        .rights-list li           { padding-left: 0; margin-bottom: 14px; }
+        .rights-list li::before   { display: none; }
         .rights-title {
+            font-size: 14px;
             font-weight: 700;
-            color: #334155;
-            font-size: 14px;
+            color: var(--text-medium);
         }
-
         .rights-desc {
-            color: #64748b;
             font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
         }
 
+        /* ── 連結 ─────────────────────────────────────────────── */
         a.inline-link {
             color: var(--brand-green);
             text-decoration: underline;
             font-weight: 600;
             transition: opacity 0.2s;
         }
-
         a.inline-link:hover { opacity: 0.75; }
 
-        .note-text {
-            font-size: 12px;
-            color: #94a3b8;
-            line-height: 1.6;
-            margin-top: 8px;
-        }
-
-        /* 聯絡區塊 */
+        /* ── 聯絡區塊 ─────────────────────────────────────────── */
         .contact-box {
             background: rgba(248, 250, 252, 0.5);
             padding: 32px;
@@ -333,65 +311,61 @@
             border: 1px dashed #e2e8f0;
             text-align: center;
         }
+        .contact-box h3            { justify-content: center; }
+        .contact-box .note-text    { margin-top: 16px; }
 
         .email-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #0f172a;
+            background: var(--text-heading);
             color: white;
             padding: 12px 24px;
             border-radius: 99px;
+            font-size: 14px;
             font-weight: 700;
             text-decoration: none;
             transition: all 0.2s;
             margin-top: 16px;
-            font-size: 14px;
         }
-
         .email-btn:hover {
             background: #1e293b;
             transform: translateY(-2px);
         }
 
-        footer {
-            text-align: center;
-            padding-bottom: 40px;
-        }
+        /* ── 頁尾 ─────────────────────────────────────────────── */
+        footer { text-align: center; padding-bottom: 40px; }
 
         .back-link {
             font-size: 14px;
             font-weight: 700;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             text-decoration: none;
             transition: color 0.2s;
         }
-
         .back-link:hover { color: var(--brand-dark); }
 
         .copyright {
             margin-top: 32px;
             font-size: 10px;
-            color: #cbd5e1;
             font-weight: 700;
+            color: var(--text-faint);
             text-transform: uppercase;
             letter-spacing: 0.2em;
         }
 
+        /* ── 背景裝飾 ─────────────────────────────────────────── */
         .decor-1 {
             position: fixed; top: -5%; right: -5%;
             width: 300px; height: 300px;
             background: rgba(255, 206, 0, 0.1);
-            border-radius: 50%; filter: blur(100px);
-            pointer-events: none;
+            border-radius: 50%; filter: blur(100px); pointer-events: none;
         }
-
         .decor-2 {
             position: fixed; bottom: -5%; left: -5%;
             width: 320px; height: 320px;
             background: rgba(0, 108, 73, 0.05);
-            border-radius: 50%; filter: blur(100px);
-            pointer-events: none;
+            border-radius: 50%; filter: blur(100px); pointer-events: none;
         }
     </style>
 </head>
@@ -404,7 +378,7 @@
         <header>
             <div class="logo-box">
                 <img src="https://www.hohoho.com.tw/EDM/project/images/hoban_Schedule_logo.svg" alt="Logo"
-                    style="width: 40px; height: 40px; object-fit: contain;">
+                    style="width:40px;height:40px;object-fit:contain;">
             </div>
             <h1>HO幫手</h1>
             <p class="subtitle">Privacy Policy</p>
@@ -427,7 +401,8 @@
                 <!-- 角色與責任 -->
                 <article>
                     <h3><span class="dot"></span> 角色與責任</h3>
-                    <p>「HO幫手」為產品名稱。本服務由 <strong>合邦商網股份有限公司 (HOBAN CORP)</strong> 負責開發、營運與維護，並作為個人資料之蒐集、處理與利用的唯一責任主體（資料控管者）。</p>
+                    <p>「HO幫手」為產品名稱。本服務由 <strong>合邦商網股份有限公司 (HOBAN CORP)</strong>
+                        負責開發、營運與維護，並作為個人資料之蒐集、處理與利用的唯一責任主體（資料控管者）。</p>
                     <p>如對個人資料處理有任何疑問或申請，請直接聯繫合邦商網股份有限公司。</p>
                 </article>
 
@@ -474,33 +449,36 @@
                 <article>
                     <h3><span class="dot"></span> 資料存取與可視範圍</h3>
                     <p>不同角色可查閱的資料範圍如下，本服務不允許超出角色授權的跨帳號存取：</p>
-                    <div class="visibility-grid" style="margin-bottom:12px;">
-                        <div class="visibility-row">
-                            <p class="visibility-role" style="min-width:110px;font-weight:600;">個人行程</p>
-                            <p class="visibility-desc">由成員自行建立或透過 Google 日曆同步的行程，包含自訂行程（工作／忙碌／休假）與 Google 日曆行程。</p>
-                        </div>
-                        <div class="visibility-row">
-                            <p class="visibility-role" style="min-width:110px;font-weight:600;">群組行程</p>
-                            <p class="visibility-desc">由管理員或群主指派給成員的行程，包含指派行程與 HoHo 平台訂單行程。</p>
-                        </div>
+                    <div class="data-box">
+                        <span class="label">行程類別定義</span>
+                        <p class="subheading">個人行程</p>
+                        <ul>
+                            <li><strong>自訂行程</strong>：使用者自行建立，可設定工作、忙碌或休假類別。</li>
+                            <li><strong>Google 日曆</strong>：與 Google 帳號同步匯入的行程。</li>
+                        </ul>
+                        <p class="subheading">群組行程</p>
+                        <ul>
+                            <li><strong>指派行程</strong>：管理員為成員新增的工作指派。</li>
+                            <li><strong>訂單行程</strong>：管理員從 HoHo 平台同步並指派給成員的訂單。</li>
+                        </ul>
                     </div>
-                    <p>不同角色可查閱的資料範圍如下，本服務不允許超出角色授權的跨帳號存取：</p>
                     <div class="visibility-grid">
                         <div class="visibility-row">
-                            <p class="visibility-role">成員本人</p>
-                            <p class="visibility-desc">可查看自己設定或被指派的所有行程（個人行程與群組行程）、出勤紀錄及薪資統計。</p>
+                            <p class="card-title">成員本人</p>
+                            <p class="card-desc">可查看自己設定或被指派的所有行程（個人行程與群組行程）、出勤紀錄及薪資統計。</p>
                         </div>
                         <div class="visibility-row">
-                            <p class="visibility-role">一般成員（同群組）</p>
-                            <p class="visibility-desc">除了本人資料外，<strong>無法查看</strong>其他成員的任何資料。</p>
+                            <p class="card-title">一般成員（同群組）</p>
+                            <p class="card-desc">除了本人資料外，<strong>無法查看</strong>其他成員的任何資料。</p>
                         </div>
                         <div class="visibility-row">
-                            <p class="visibility-role">群組管理員／群主</p>
-                            <p class="visibility-desc">可查看同群組所有成員的群組行程（指派行程、訂單行程）、出勤紀錄及薪資設定，以執行排班管理與薪資核算。成員的個人行程（自訂行程與 Google 日曆）僅以「忙碌」狀態顯示時段佔用，<strong>不顯示</strong>實際內容。</p>
+                            <p class="card-title">群組管理員／群主</p>
+                            <p class="card-desc">可查看同群組所有成員的<strong>群組行程</strong>（指派行程、訂單行程）、出勤紀錄及薪資設定，以執行排班管理與薪資核算。</p>
+                            <p class="note-text">成員的個人行程（自訂行程與 Google 日曆）僅以「忙碌」狀態顯示時段佔用，不顯示實際內容。</p>
                         </div>
                         <div class="visibility-row">
-                            <p class="visibility-role">公司擁有者（Owner）</p>
-                            <p class="visibility-desc">可查看同公司（統一編號）旗下所有成員的基本資料及帳號狀態，並管理訂閱設定。</p>
+                            <p class="card-title">公司擁有者（Owner）</p>
+                            <p class="card-desc">可查看同公司（統一編號）旗下所有成員的基本資料及帳號狀態，並管理訂閱設定。</p>
                         </div>
                     </div>
                 </article>
@@ -509,16 +487,20 @@
                 <article>
                     <h3><span class="dot"></span> 第三方服務整合</h3>
                     <div class="third-party-box">
-                        <span class="third-party-name">LINE Corporation</span>
-                        <p class="third-party-desc">本服務透過 LINE Login 驗證身份，並使用 LINE Messaging API 發送排班通知與行程提醒等服務訊息。LINE 依其隱私政策獨立處理你在 LINE 中的資料；本服務僅在取得授權的範圍內使用相關介面。</p>
+                        <span class="card-title">LINE Corporation</span>
+                        <p class="card-desc">本服務透過 LINE Login 驗證身份，並使用 LINE Messaging API 發送排班通知與行程提醒等服務訊息。LINE
+                            依其隱私政策獨立處理你在 LINE 中的資料；本服務僅在取得授權的範圍內使用相關介面。</p>
                     </div>
                     <div class="third-party-box">
-                        <span class="third-party-name">Google LLC（Google Calendar API）</span>
-                        <p class="third-party-desc">若你選擇連結 Google 日曆，本服務將透過 Google Calendar API 讀寫你授權的日曆資料，僅用於日曆同步功能，不會用於其他目的。你可隨時在設定中解除連結，本服務將於解除後立即停止存取，並刪除所儲存的授權憑證。</p>
+                        <span class="card-title">Google LLC（Google Calendar API）</span>
+                        <p class="card-desc">若你選擇連結 Google 日曆，本服務將透過 Google Calendar API
+                            讀寫你授權的日曆資料，僅用於日曆同步功能，不會用於其他目的。你可隨時在設定中解除連結，本服務將於解除後立即停止存取，並刪除所儲存的授權憑證。</p>
                     </div>
                     <div class="third-party-box">
-                        <span class="third-party-name">Google Firebase（基礎設施）</span>
-                        <p class="third-party-desc">本服務使用 Firebase Authentication 及 Firestore Database 儲存帳號與業務資料。伺服器位於亞太地區（可能包含台灣、日本或新加坡）。資料於傳輸及儲存時均受加密保護。相關伺服器屬境外設施，本服務已確認其安全標準符合台灣《個人資料保護法》第 21 條要求。</p>
+                        <span class="card-title">Google Firebase（基礎設施）</span>
+                        <p class="card-desc">本服務使用 Firebase Authentication 及 Firestore Database
+                            儲存帳號與業務資料。伺服器位於亞太地區（可能包含台灣、日本或新加坡）。資料於傳輸及儲存時均受加密保護。相關伺服器屬境外設施，本服務已確認其安全標準符合台灣《個人資料保護法》第 21
+                            條要求。</p>
                     </div>
                     <p class="note-text">除上述整合外，我們不會將你的個人資料提供給其他第三方，除非為完成服務、符合法令規定或取得你的明確同意。</p>
                 </article>
@@ -538,7 +520,7 @@
                         <span class="retention-label">Google 日曆授權憑證</span>
                         <span class="retention-value">解除綁定後立即刪除。</span>
                     </div>
-                    <div class="retention-row" style="margin-bottom: 0;">
+                    <div class="retention-row">
                         <span class="retention-label">系統日誌</span>
                         <span class="retention-value">最長保留 90 天。</span>
                     </div>
@@ -563,7 +545,10 @@
                         </li>
                         <li>
                             <span class="rights-title">刪除個人資料</span><br>
-                            <span class="rights-desc">請來信 <a href="mailto:hoho.cs@hohoho.com.tw?subject=%5BHo%E5%B9%AB%E6%89%8B%5D%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99%E5%88%AA%E9%99%A4%E7%94%B3%E8%AB%8B" class="inline-link">hoho.cs@hohoho.com.tw</a>，主旨請填寫「個人資料刪除申請」，我們將於 15 個工作天內回覆。</span>
+                            <span class="rights-desc">請來信 <a
+                                    href="mailto:hoho.cs@hohoho.com.tw?subject=%5BHo%E5%B9%AB%E6%89%8B%5D%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99%E5%88%AA%E9%99%A4%E7%94%B3%E8%AB%8B"
+                                    class="inline-link">hoho.cs@hohoho.com.tw</a>，主旨請填寫「個人資料刪除申請」，我們將於 15
+                                個工作天內回覆。</span>
                         </li>
                     </ul>
                     <p class="note-text">為保障帳戶安全，提出申請時可能需要進行身分驗證。若你認為本服務對個人資料的處理有違法情事，亦可向主管機關提出申訴。</p>
@@ -571,12 +556,13 @@
 
                 <!-- 聯絡方式 -->
                 <div class="contact-box">
-                    <h3 style="justify-content: center;"><span class="dot"></span> 聯絡我們</h3>
-                    <p style="font-size: 14px; margin-bottom: 8px;">若你對本政策或個人資料處理有任何疑問</p>
-                    <a href="mailto:hoho.cs@hohoho.com.tw?subject=%5BHo%E5%B9%AB%E6%89%8B%5D%E9%9A%B1%E7%A7%81%E6%AC%8A%E7%9B%B8%E9%97%9C%E8%A9%A2%E5%95%8F" class="email-btn">
+                    <h3><span class="dot"></span> 聯絡我們</h3>
+                    <p>若你對本政策或個人資料處理有任何疑問</p>
+                    <a href="mailto:hoho.cs@hohoho.com.tw?subject=%5BHo%E5%B9%AB%E6%89%8B%5D%E9%9A%B1%E7%A7%81%E6%AC%8A%E7%9B%B8%E9%97%9C%E8%A9%A2%E5%95%8F"
+                        class="email-btn">
                         hoho.cs@hohoho.com.tw
                     </a>
-                    <p style="font-size: 12px; color: #94a3b8; margin-top: 16px; margin-bottom: 0;">合邦商網股份有限公司 (HOBAN CORP) 將盡速回覆並處理。</p>
+                    <p class="note-text">合邦商網股份有限公司 (HOBAN CORP) 將盡速回覆並處理。</p>
                 </div>
 
             </div>
