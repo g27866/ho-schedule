@@ -474,18 +474,29 @@
                 <article>
                     <h3><span class="dot"></span> 資料存取與可視範圍</h3>
                     <p>不同角色可查閱的資料範圍如下，本服務不允許超出角色授權的跨帳號存取：</p>
+                    <div class="visibility-grid" style="margin-bottom:12px;">
+                        <div class="visibility-row">
+                            <p class="visibility-role" style="min-width:110px;font-weight:600;">個人行程</p>
+                            <p class="visibility-desc">由成員自行建立或透過 Google 日曆同步的行程，包含自訂行程（工作／忙碌／休假）與 Google 日曆行程。</p>
+                        </div>
+                        <div class="visibility-row">
+                            <p class="visibility-role" style="min-width:110px;font-weight:600;">群組行程</p>
+                            <p class="visibility-desc">由管理員或群主指派給成員的行程，包含指派行程與 HoHo 平台訂單行程。</p>
+                        </div>
+                    </div>
+                    <p>不同角色可查閱的資料範圍如下，本服務不允許超出角色授權的跨帳號存取：</p>
                     <div class="visibility-grid">
                         <div class="visibility-row">
                             <p class="visibility-role">成員本人</p>
-                            <p class="visibility-desc">可查看自己的行程、出勤紀錄及薪資統計。</p>
+                            <p class="visibility-desc">可查看自己設定或被指派的所有行程（個人行程與群組行程）、出勤紀錄及薪資統計。</p>
                         </div>
                         <div class="visibility-row">
                             <p class="visibility-role">一般成員（同群組）</p>
-                            <p class="visibility-desc">僅能查看自己的排班行程、出勤紀錄及薪資統計，<strong>無法查看</strong>其他成員的任何資料。</p>
+                            <p class="visibility-desc">除了本人資料外，<strong>無法查看</strong>其他成員的任何資料。</p>
                         </div>
                         <div class="visibility-row">
                             <p class="visibility-role">群組管理員／群主</p>
-                            <p class="visibility-desc">可查看同群組所有成員的排班行程、出勤紀錄及薪資設定，以執行排班管理與薪資核算。</p>
+                            <p class="visibility-desc">可查看同群組所有成員的群組行程（指派行程、訂單行程）、出勤紀錄及薪資設定，以執行排班管理與薪資核算。成員的個人行程（自訂行程與 Google 日曆）僅以「忙碌」狀態顯示時段佔用，<strong>不顯示</strong>實際內容。</p>
                         </div>
                         <div class="visibility-row">
                             <p class="visibility-role">公司擁有者（Owner）</p>
