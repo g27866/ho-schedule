@@ -96,6 +96,7 @@
             function App() {
                 const [showSplash, setShowSplash] = useState(true);
                 const [showDocs, setShowDocs] = useState(false);
+                const [showSurvey, setShowSurvey] = useState(false);
 
                 useEffect(() => {
                     const timer = setTimeout(() => setShowSplash(false), 2500);
@@ -107,10 +108,18 @@
                         ? h(motion.div, { key: "splash", exit: { opacity: 0, scale: 1.1 }, transition: { duration: 0.5 } },
                             h(SplashScreen)
                         )
-                        : showDocs
-                            ? h(motion.div, { key: "docs", initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: 40 }, transition: { duration: 0.3 } },
-                                h(DocsPage, { onBack: () => setShowDocs(false), liffUrl: LIFF_URL })
+                        : showSurvey
+                            ? h(motion.div, { key: "survey", initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: 40 }, transition: { duration: 0.3 } },
+                                h(SurveyPage, { onBack: () => setShowSurvey(false) })
                             )
+                            : showDocs
+                                ? h(motion.div, { key: "docs", initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: 40 }, transition: { duration: 0.3 } },
+                                    h(DocsPage, { 
+                                        onBack: () => setShowDocs(false), 
+                                        onSurvey: () => { setShowDocs(false); setShowSurvey(true); },
+                                        liffUrl: LIFF_URL 
+                                    })
+                                )
                             : h(motion.main, {
                                 key: "landing",
                                 initial: { opacity: 0 },
@@ -167,15 +176,17 @@
                                         )
                                     ),
                                     h('div', { className: "flex flex-col items-center gap-2 mt-4" },
-                                        h('a', {
-                                            href: "privacy.html",
-                                            onClick: (e) => {
-                                                e.preventDefault();
-                                                window.location.href = "privacy.html";
-                                            },
-                                            className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
-                                        }, "隱私權政策 Privacy Policy"),
-                                        h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.1 • © 2026 HOBAN CORP")
+                                        h('div', { className: "flex items-center gap-4" },
+                                            h('a', {
+                                                href: "privacy.html",
+                                                onClick: (e) => {
+                                                    e.preventDefault();
+                                                    window.location.href = "privacy.html";
+                                                },
+                                                className: "text-[12px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
+                                            }, "隱私權政策 Privacy Policy")
+                                        ),
+                                        h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.3 • © 2026 HOBAN CORP")
                                     )
                                 )
                             )
@@ -479,7 +490,7 @@
                 },
             ];
 
-            function DocsPage({ onBack, liffUrl }) {
+            function DocsPage({ onBack, onSurvey, liffUrl }) {
                 const [openItem, setOpenItem] = useState(null);
                 const itemRefs = React.useRef({});
                 const scrollContainerRef = React.useRef(null);
@@ -596,23 +607,225 @@
                         h('div', { className: "md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto" },
                             h(motion.button, {
                                 whileTap: { scale: 0.96 },
-                                onClick: () => { window.location.href = liffUrl; },
+                                onClick: onSurvey,
                                 className: "w-full py-4 rounded-[24px] font-black text-2xl shadow-xl flex items-center justify-center gap-3 bg-[#FFCE00] text-[#735C00]"
                             },
-                                h('span', null, "立即開始使用"),
+                                h('span', null, "我有興趣"),
                                 h(motion.div, { animate: { x: [0, 5, 0] }, transition: { repeat: Infinity, duration: 1 } },
                                     h('span', { className: "ms text-[20px]" }, "arrow_forward")
                                 )
                             )
                         ),
                         h('div', { className: "flex flex-col items-center gap-2 mt-4" },
-                            h('a', {
-                                href: "privacy.html",
-                                onClick: (e) => { e.preventDefault(); window.location.href = "privacy.html"; },
-                                className: "text-[10px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
-                            }, "隱私權政策 Privacy Policy"),
-                            h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.1 • © 2026 HOBAN CORP")
+                            h('div', { className: "flex items-center gap-4" },
+                                h('button', {
+                                    onClick: () => { window.location.href = liffUrl; },
+                                    className: "text-[12px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
+                                }, "開啟系統 App"),
+                                h('div', { className: "w-1 h-1 rounded-full bg-slate-300" }),
+                                h('a', {
+                                    href: "privacy.html",
+                                    onClick: (e) => { e.preventDefault(); window.location.href = "privacy.html"; },
+                                    className: "text-[12px] font-bold text-[#735C00] hover:underline decoration-2 underline-offset-4"
+                                }, "隱私權政策 Privacy Policy")
+                            ),
+                            h('p', { className: "text-center text-[10px] font-medium text-slate-400 tracking-widest uppercase" }, "Version 1.2.3 • © 2026 HOBAN CORP")
                         )
+                    )
+                );
+            }
+
+            // ─── Survey Page ────────────────────────────────────────────────
+
+            function SurveyPage({ onBack }) {
+                const [form, setForm] = useState({
+                    taxId: '',
+                    companyName: '',
+                    contactPerson: '',
+                    contactPhone: '',
+                    email: '',
+                    teamSize: '',
+                    interest: []
+                });
+                const [submitted, setSubmitted] = useState(false);
+
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    console.log('Survey Submitted:', form);
+                    setSubmitted(true);
+                };
+
+                if (submitted) {
+                    return h('main', { className: "h-screen w-full flex flex-col items-center justify-center p-8 bg-[#F7F9FB]" },
+                        h(motion.div, { 
+                            initial: { scale: 0.8, opacity: 0 }, 
+                            animate: { scale: 1, opacity: 1 },
+                            className: "bg-white p-10 rounded-[40px] shadow-xl text-center flex flex-col items-center gap-6"
+                        },
+                            h('div', { className: "w-20 h-20 rounded-full bg-emerald-50 flex items-center justify-center" },
+                                h('span', { className: "ms text-emerald-500 text-[48px]" }, "check_circle")
+                            ),
+                            h('div', null,
+                                h('h2', { className: "text-2xl font-black text-slate-900" }, "需求已送出"),
+                                h('p', { className: "text-slate-500 mt-2" }, "感謝您的參與！服務專員將於 1-2 個工作天內聯繫您。")
+                            ),
+                            h('button', {
+                                onClick: onBack,
+                                className: "mt-4 px-10 py-4 bg-[#FFCE00] text-[#735C00] font-black rounded-2xl shadow-lg shadow-[#FFCE00]/20"
+                            }, "返回首頁")
+                        )
+                    );
+                }
+
+                return h('main', { className: "relative h-screen w-full flex flex-col bg-[#F7F9FB] text-[#191C1E] overflow-hidden" },
+                    h('div', { className: "absolute top-[-5%] right-[-5%] w-72 h-72 bg-[#FFCE00]/10 rounded-full blur-[100px] pointer-events-none" }),
+                    h('div', { className: "absolute bottom-[-5%] left-[-5%] w-80 h-80 bg-[#006C49]/5 rounded-full blur-[100px] pointer-events-none" }),
+
+                    h('header', { className: "shrink-0 px-5 pt-5 pb-3 flex items-center gap-3 md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto w-full" },
+                        h('button', { 
+                            onClick: onBack,
+                            className: "w-9 h-9 rounded-xl bg-white shadow flex items-center justify-center text-slate-500 hover:bg-slate-50 shrink-0" 
+                        }, h('span', { className: "ms text-[20px]" }, "arrow_back")),
+                        h('div', { className: "flex-1" },
+                            h('h1', { className: "text-lg font-extrabold tracking-tight text-[#191C1E]" }, "我有興趣"),
+                            h('p', { className: "text-[9px] uppercase tracking-[0.25em] text-[#4E4632]/50" }, "Subscription Inquiry")
+                        )
+                    ),
+
+                    h('div', { className: "flex-1 px-5 min-h-0 overflow-hidden md:max-w-xl md:w-[70%] lg:w-[50%] md:mx-auto w-full" },
+                        h('div', { className: "h-full overflow-y-auto no-scrollbar pb-10" },
+                            h('div', { className: "py-4 px-2 flex items-center gap-2 mb-2" },
+                                h('div', { className: "flex -space-x-2" },
+                                    [1,2,3].map(i => h('div', { key: i, className: "w-6 h-6 rounded-full border-2 border-white bg-slate-200" }))
+                                ),
+                                h('p', { className: "text-[11px] font-bold text-slate-400" }, "目前已有 ", h('span', { className: "text-[#735C00]" }, "150+"), " 間企業預約。"),
+                                h('div', { className: "ml-auto flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100" },
+                                    h('span', { className: "ms text-[14px]" }, "timer"),
+                                    h('span', { className: "text-[10px] font-black uppercase" }, "只需 30 秒")
+                                )
+                            ),
+
+                            h(motion.form, { 
+                                initial: "hidden",
+                                animate: "visible",
+                                variants: {
+                                    visible: { transition: { staggerChildren: 0.1 } }
+                                },
+                                onSubmit: handleSubmit, 
+                                className: "space-y-6" 
+                            },
+                                // Group 1: Company
+                                h(FormSection, { title: "公司資訊", icon: "corporate_fare" },
+                                    h(FormField, { label: "公司統一編號", value: form.taxId, onChange: (v) => setForm({...form, taxId: v}), placeholder: "請輸入 8 位統一編號", required: true }),
+                                    h(FormField, { label: "公司名稱", value: form.companyName, onChange: (v) => setForm({...form, companyName: v}), placeholder: "例如：合邦商網", required: true })
+                                ),
+
+                                // Group 2: Contact
+                                h(FormSection, { title: "聯絡方式", icon: "alternate_email" },
+                                    h(FormField, { label: "聯絡人姓名", value: form.contactPerson, onChange: (v) => setForm({...form, contactPerson: v}), placeholder: "如何稱呼您？", required: true }),
+                                    h(FormField, { label: "聯絡人電話", value: form.contactPhone, onChange: (v) => setForm({...form, contactPhone: v}), placeholder: "09xx-xxx-xxx", required: true }),
+                                    h(FormField, { label: "電子信箱 Email", value: form.email, onChange: (v) => setForm({...form, email: v}), placeholder: "yourname@company.com", type: "email", required: true })
+                                ),
+
+                                // Group 3: Needs
+                                h(FormSection, { title: "需求調查", icon: "analytics" },
+                                    h(FormField, { label: "團隊預估人數", value: form.teamSize, onChange: (v) => setForm({...form, teamSize: v}), placeholder: "例如：10", type: "number" }),
+                                    h(MultiSelectField, { 
+                                        label: "對哪幾項功能最有興趣 (可複選)", 
+                                        value: form.interest, 
+                                        onChange: (v) => setForm({...form, interest: v}),
+                                        options: [
+                                            "AI 智慧排班精靈",
+                                            "即時出勤看板",
+                                            "日曆雙向同步",
+                                            "自動化薪資統計",
+                                            "LINE 主動訊息通知",
+                                            "其他"
+                                        ],
+                                        required: true
+                                    })
+                                ),
+
+                                h(motion.div, { 
+                                    variants: { hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } },
+                                    className: "px-2 pt-4" 
+                                },
+                                    h(motion.button, {
+                                        whileHover: { scale: 1.01 },
+                                        whileTap: { scale: 0.98 },
+                                        type: "submit",
+                                        className: "w-full py-5 bg-gradient-to-br from-[#FFCE00] to-[#FFB700] text-[#735C00] font-black text-2xl rounded-[28px] shadow-2xl shadow-[#FFCE00]/30 transition-shadow hover:shadow-[#FFCE00]/50"
+                                    }, "確認送出的需求")
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+
+            function FormSection({ title, icon, children }) {
+                return h(motion.div, {
+                    variants: {
+                        hidden: { y: 20, opacity: 0 },
+                        visible: { y: 0, opacity: 1 }
+                    },
+                    className: "bg-white/70 backdrop-blur-xl rounded-[32px] border border-white p-6 pb-8 space-y-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)]"
+                },
+                    h('div', { className: "flex items-center gap-3 mb-2" },
+                        h('div', { className: "w-8 h-8 rounded-lg bg-[#FFCE00]/10 flex items-center justify-center" },
+                            h('span', { className: "ms text-[#735C00] text-[18px]" }, icon)
+                        ),
+                        h('h3', { className: "text-[14px] font-black text-slate-900 tracking-tight" }, title)
+                    ),
+                    children
+                );
+            }
+
+            function FormField({ label, value, onChange, placeholder, type = "text", required = false }) {
+                return h('div', { className: "group space-y-2" },
+                    h('label', { className: "block text-[12px] font-black text-slate-500 ml-1 transition-colors group-focus-within:text-[#735C00]" }, label, required && h('span', { className: "text-rose-500 ml-1" }, "*")),
+                    h('input', {
+                        type,
+                        value,
+                        required,
+                        placeholder,
+                        onChange: (e) => onChange(e.target.value),
+                        className: "w-full px-5 py-4 bg-white border border-slate-100 rounded-2xl text-[15px] font-medium focus:outline-none focus:ring-4 focus:ring-[#FFCE00]/10 focus:border-[#FFCE00] focus:bg-white transition-all placeholder:text-slate-300 shadow-sm"
+                    })
+                );
+            }
+
+            function MultiSelectField({ label, value, onChange, options, required = false }) {
+                const toggle = (opt) => {
+                    const newValue = value.includes(opt) 
+                        ? value.filter(v => v !== opt) 
+                        : [...value, opt];
+                    onChange(newValue);
+                };
+
+                return h('div', { className: "space-y-4" },
+                    h('label', { className: "block text-[12px] font-black text-slate-500 ml-1" }, label, required && h('span', { className: "text-rose-500 ml-1" }, "*")),
+                    h('div', { className: "grid grid-cols-1 sm:grid-cols-2 gap-3" },
+                        options.map(opt => {
+                            const isActive = value.includes(opt);
+                            return h(motion.button, {
+                                key: opt,
+                                type: "button",
+                                whileHover: { y: -2 },
+                                whileTap: { scale: 0.97 },
+                                onClick: () => toggle(opt),
+                                className: `flex items-center gap-3 px-5 py-4 rounded-2xl border transition-all text-left text-[14px] font-bold shadow-sm ${
+                                    isActive 
+                                    ? 'bg-[#FFCE00] border-[#FFCE00] text-[#735C00] shadow-[#FFCE00]/20' 
+                                    : 'bg-white border-slate-100 text-slate-500 hover:border-slate-300'
+                                }`
+                            }, 
+                                h('span', { className: `ms text-[20px] ${isActive ? 'text-[#735C00]' : 'text-slate-200'}` }, 
+                                    isActive ? 'check_circle' : 'circle'
+                                ),
+                                h('span', { className: "flex-1 leading-tight" }, opt)
+                            );
+                        })
                     )
                 );
             }
